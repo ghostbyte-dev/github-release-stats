@@ -7,6 +7,7 @@ export type Release = {
 	created_at: Date;
 	published_at: Date;
 	assets: Asset[];
+	author: User;
 	body: string;
 };
 

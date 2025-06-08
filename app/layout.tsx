@@ -28,7 +28,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryClientProvider client={queryClient}>
-          {children}
+          <div className="p-10">{children}</div>
+
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </body>

@@ -1,5 +1,6 @@
 "use client";
 
+import Card from "@/components/card";
 import SearchBar from "@/components/searchBar";
 import type { Release } from "@/types/release";
 import { useMutation } from "@tanstack/react-query";
@@ -47,6 +48,12 @@ export default function Home() {
         </div>
       ) : (
         <></>
+      )}
+
+      {releases.data && (
+        <div className="grid grid-cols-3 gap-4">
+          <Card releases={releases.data} />
+        </div>
       )}
     </div>
   );
