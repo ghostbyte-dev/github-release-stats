@@ -34,7 +34,12 @@ const Card = ({ repository }: CardProps) => {
 			{latestRelease !== undefined ? (
 				<>
 					<div className="flex flex-row gap-4 items-center">
-						<h3 className="text-2xl font-bold">{latestRelease.name}</h3>
+						<a
+							href={latestRelease.html_url}
+							className="text-2xl font-bold hover:underline"
+						>
+							{latestRelease.name}
+						</a>
 						<span className="badge">Latest</span>
 					</div>
 					<div className="flex flex-row gap-2 mt-4">
@@ -46,7 +51,7 @@ const Card = ({ repository }: CardProps) => {
 							className="rounded-full"
 						/>
 						<a
-							href={latestRelease.author.url}
+							href={latestRelease.author.html_url}
 							className="font-bold hover:underline"
 						>
 							{latestRelease.author.login}
@@ -59,7 +64,10 @@ const Card = ({ repository }: CardProps) => {
 							className="flex flex-row gap-2 mt-4 items-center"
 						>
 							<PackageIcon />
-							<a href={asset.url} className="font-bold hover:underline">
+							<a
+								href={asset.browser_download_url}
+								className="font-bold hover:underline"
+							>
 								{asset.name}
 							</a>
 							<p className="ml-4">&#9900; {asset.download_count} downloads</p>

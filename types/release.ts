@@ -1,5 +1,6 @@
 export type Release = {
 	url: string;
+	html_url: string;
 	tag_name: string;
 	name: "string";
 	draft: boolean;
