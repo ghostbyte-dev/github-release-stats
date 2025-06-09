@@ -18,10 +18,24 @@ const SearchBar = (props: SearchBarProps) => {
 	};
 
 	return (
-		<div className="flex flex-col">
-			<Input value={user} onChange={setUser} />
-			<Input value={repo} onChange={setRepo} />
-			<button type="button" onClick={() => submit({ user, repo })}>
+		<div className="flex flex-row gap-4">
+			<Input
+				value={user}
+				onChange={setUser}
+				label="User:"
+				placeholder="username / organization"
+			/>
+			<Input
+				value={repo}
+				onChange={setRepo}
+				label="Repository:"
+				placeholder="repository"
+			/>
+			<button
+				type="button"
+				onClick={() => submit({ user, repo })}
+				className="bg-secondary-background rounded-lg px-4 cursor-pointer"
+			>
 				Search
 			</button>
 		</div>

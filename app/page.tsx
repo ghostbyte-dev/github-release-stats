@@ -29,16 +29,21 @@ export default function Home() {
 
 	return (
 		<div>
-			<SearchBar onSubmit={search} />
-			{repositories && (
-				<div className="grid grid-cols-3 gap-4">
-					{repositories.map((repository: Repository) => (
-						<div key={repository.name + repository.user}>
-							<Card repository={repository} />
-						</div>
-					))}
-				</div>
-			)}
+			<nav className="flex flex-row gap-52">
+				<h1 className="text-4xl font-bold">Github Release Counter</h1>
+				<SearchBar onSubmit={search} />
+			</nav>
+			<div className="mt-10">
+				{repositories && (
+					<div className="grid grid-cols-3 gap-4">
+						{repositories.map((repository: Repository) => (
+							<div key={repository.name + repository.user}>
+								<Card repository={repository} />
+							</div>
+						))}
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

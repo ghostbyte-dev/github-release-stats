@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
 @theme {
+    --font-sans: Noto Sans;
     --color-text: #fff;
     --color-primary: #3EB84F;
     --color-border: #3D444D;
     --color-background: #0D1117;
+    --color-secondary-background: #212830;
 }
 
 @layer components {
