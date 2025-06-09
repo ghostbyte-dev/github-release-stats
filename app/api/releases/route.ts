@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 			`https://api.github.com/repos/${user}/${repo}/releases`,
 			{
 				headers: {
-					Authorization: "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",
+					Authorization: process.env.GITHUB_API_KEY ?? "",
 				},
 			},
 		);
