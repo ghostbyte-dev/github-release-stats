@@ -1,6 +1,8 @@
+import { convertBytes } from "@/common/bytesToSize";
 import { formatTimeAgo } from "@/common/formatTimeAgo";
-import type { Release } from "@/types/release";
+import type { Asset, Release } from "@/types/release";
 import type { Repository } from "@/types/repository";
+import { PackageIcon } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 
@@ -51,6 +53,19 @@ const Card = ({ repository }: CardProps) => {
 						</a>
 						<p>released this {formatTimeAgo(latestRelease.published_at)}</p>
 					</div>
+					{latestRelease.assets.map((asset: Asset) => (
+						<div
+							key={asset.id}
+							className="flex flex-row gap-2 mt-4 items-center"
+						>
+							<PackageIcon />
+							<a href={asset.url} className="font-bold hover:underline">
+								{asset.name}
+							</a>
+							<p className="ml-4">&#9900; {asset.download_count} downloads</p>
+							<p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
+						</div>
+					))}
 				</>
 			) : isReleasesPending ? (
 				<p>loading...</p>
