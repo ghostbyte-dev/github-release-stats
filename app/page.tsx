@@ -3,11 +3,11 @@
 import Card from "@/components/card";
 import SearchBar from "@/components/searchBar";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import type { Repository } from "@/types/repository";
+import type { RepositorySave } from "@/types/repositorySave";
 import type { Search } from "@/types/search";
 
 export default function Home() {
-	const [repositories, setRepositories] = useLocalStorage<Repository[]>(
+	const [repositories, setRepositories] = useLocalStorage<RepositorySave[]>(
 		"repositories",
 		[],
 	);
@@ -36,9 +36,9 @@ export default function Home() {
 			<div className="mt-10">
 				{repositories && (
 					<div className="grid grid-cols-3 gap-4">
-						{repositories.map((repository: Repository) => (
+						{repositories.map((repository: RepositorySave) => (
 							<div key={repository.name + repository.user}>
-								<Card repository={repository} />
+								<Card user={repository.user} repositoryName={repository.name} />
 							</div>
 						))}
 					</div>

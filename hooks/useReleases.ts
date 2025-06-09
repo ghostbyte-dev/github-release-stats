@@ -11,7 +11,7 @@ export default function useReleases(
 		isError: isReleasesError,
 	} = useQuery({
 		queryFn: () => fetchReleases(user, repository),
-		queryKey: [user, repository],
+		queryKey: ["releases", user, repository],
 	});
 
 	const fetchReleases = async (

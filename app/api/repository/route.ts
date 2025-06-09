@@ -8,15 +8,13 @@ export async function GET(request: Request) {
 		console.log(repo);
 		const token = process.env.GITHUB_API_KEY ?? "";
 		console.log(token);
-		const res = await fetch(
-			`https://api.github.com/repos/${user}/${repo}/releases`,
-			{
-				headers: {
-					Authorization: `bearer ${token}`,
-				},
+		const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
+			headers: {
+				Authorization: `bearer ${token}`,
 			},
-		);
+		});
 		const releases = await res.json();
+		console.log(releases);
 		return new Response(JSON.stringify(releases), {
 			status: 200,
 			headers: { "Content-Type": "application/json" },
