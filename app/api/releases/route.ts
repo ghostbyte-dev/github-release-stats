@@ -6,12 +6,13 @@ export async function GET(request: Request) {
 		);
 		console.log(user);
 		console.log(repo);
-
+		const token = process.env.GITHUB_API_KEY ?? "";
+		console.log(token);
 		const res = await fetch(
 			`https://api.github.com/repos/${user}/${repo}/releases`,
 			{
 				headers: {
-					Authorization: process.env.GITHUB_API_KEY ?? "",
+					Authorization: `bearer ${token}`,
 				},
 			},
 		);

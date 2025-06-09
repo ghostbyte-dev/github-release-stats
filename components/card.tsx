@@ -1,6 +1,8 @@
+import { formatTimeAgo } from "@/common/formatTimeAgo";
 import type { Release } from "@/types/release";
 import type { Repository } from "@/types/repository";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 
 interface CardProps {
 	repository: Repository;
@@ -23,16 +25,32 @@ const Card = ({ repository }: CardProps) => {
 		return response.json();
 	};
 
+	const latestRelease = releases?.[0];
+
 	return (
-		<div className="p-5 bg-neutral-200 rounded-2xl">
-			{releases?.[0] !== undefined ? (
+		<div className="card">
+			{latestRelease !== undefined ? (
 				<>
-					<div className="flex flex-row gap-4">
-						<h3 className="text-2xl font-bold">{releases[0].name}</h3>
+					<div className="flex flex-row gap-4 items-center">
+						<h3 className="text-2xl font-bold">{latestRelease.name}</h3>
+						<span className="badge">Latest</span>
 					</div>
-					<span className="font-bold text-3xl">
-						{releases[0].assets[0]?.download_count ?? ""}
-					</span>
+					<div className="flex flex-row gap-2 mt-4">
+						<Image
+							src={latestRelease.author.avatar_url}
+							height={24}
+							width={24}
+							alt={"Avatar"}
+							className="rounded-full"
+						/>
+						<a
+							href={latestRelease.author.url}
+							className="font-bold hover:underline"
+						>
+							{latestRelease.author.login}
+						</a>
+						<p>released this {formatTimeAgo(latestRelease.published_at)}</p>
+					</div>
 				</>
 			) : isReleasesPending ? (
 				<p>loading...</p>

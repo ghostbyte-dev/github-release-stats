@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+@theme {
+    --color-text: #fff;
+    --color-primary: #3EB84F;
+    --color-border: #3D444D;
+    --color-background: #0D1117;
+}
+
+@layer components {
+    .card {
+        border-color: var(--color-border);
+        border-width: 1px;
+        border-radius: 5px;
+        padding: 15px;
+    }
+
+    .badge {
+        border-radius: calc(infinity * 1px);
+        border-width: 1px;
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        padding-inline: 8px;
+        font-size: var(--text-xs);
+        height: min-content;
+        line-height: 22px;
+    }
+}

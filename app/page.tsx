@@ -13,6 +13,14 @@ export default function Home() {
 	);
 
 	const search = (search: Search) => {
+		if (
+			repositories.some(
+				(repo) => repo.name === search.repo && repo.user === search.user,
+			)
+		) {
+			//toast already exsits
+			return;
+		}
 		setRepositories([
 			...repositories,
 			{ name: search.repo, user: search.user },
@@ -25,7 +33,7 @@ export default function Home() {
 			{repositories && (
 				<div className="grid grid-cols-3 gap-4">
 					{repositories.map((repository: Repository) => (
-						<div key={repository.name}>
+						<div key={repository.name + repository.user}>
 							<Card repository={repository} />
 						</div>
 					))}
