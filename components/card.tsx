@@ -1,41 +1,37 @@
 import { convertBytes } from "@/common/bytesToSize";
 import { formatTimeAgo } from "@/common/formatTimeAgo";
-import type { Asset, Release } from "@/types/release";
+import useReleases from "@/hooks/useReleases";
+import type { Asset } from "@/types/release";
 import type { Repository } from "@/types/repository";
 import { PackageIcon } from "@phosphor-icons/react";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface CardProps {
 	repository: Repository;
 }
 
 const Card = ({ repository }: CardProps) => {
-	const { data: releases, isPending: isReleasesPending } = useQuery({
-		queryFn: () => fetchReleases(repository),
-		queryKey: [repository.name, repository.user],
-	});
-
-	const fetchReleases = async (repository: Repository): Promise<Release[]> => {
-		const response = await fetch(
-			`/api/releases?user=${repository.user}&repo=${repository.name}`,
-		);
-		if (!response.ok) {
-			throw new Error("Network response was not ok");
-		}
-		console.log("response ok");
-		return response.json();
-	};
+	const router = useRouter();
+	const [releases, isReleasesPending] = useReleases(
+		repository.user,
+		repository.name,
+	);
 
 	const latestRelease = releases?.[0];
 
 	return (
-		<div className="card">
+		<button
+			className="card hover:bg-secondary-background cursor-pointer w-full"
+			type="button"
+			onClick={() => router.push(`/${repository.user}/${repository.name}`)}
+		>
 			{latestRelease !== undefined ? (
 				<>
 					<div className="flex flex-row gap-4 items-center">
 						<a
 							href={latestRelease.html_url}
+							onClick={(e) => e.stopPropagation()}
 							className="text-2xl font-bold hover:underline"
 						>
 							{latestRelease.name}
@@ -52,6 +48,7 @@ const Card = ({ repository }: CardProps) => {
 						/>
 						<a
 							href={latestRelease.author.html_url}
+							onClick={(e) => e.stopPropagation()}
 							className="font-bold hover:underline"
 						>
 							{latestRelease.author.login}
@@ -66,6 +63,7 @@ const Card = ({ repository }: CardProps) => {
 							<PackageIcon />
 							<a
 								href={asset.browser_download_url}
+								onClick={(e) => e.stopPropagation()}
 								className="font-bold hover:underline"
 							>
 								{asset.name}
@@ -80,7 +78,7 @@ const Card = ({ repository }: CardProps) => {
 			) : (
 				<p>an unexpected error occured</p>
 			)}
-		</div>
+		</button>
 	);
 };
 
