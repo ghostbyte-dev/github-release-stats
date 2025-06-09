@@ -1,36 +1,37 @@
 "use client";
 
 import useReleases from "@/hooks/useReleases";
-import type { Release } from "@/types/release";
+import useRepository from "@/hooks/useRepository";
 import { useParams } from "next/navigation";
 
 export default function RepositoryDetails() {
 	const params = useParams();
 	const user = params.user as string;
-	const repository = params.repository as string;
+	const repositoryName = params.repository as string;
+	console.log(repositoryName);
 
 	const [releases, isReleasesPending, isReleasesError] = useReleases(
 		user,
-		repository,
+		repositoryName,
 	);
 
-	if (isReleasesError) {
+	const [repository, isRepositoryPending, isRepositoryError] = useRepository(
+		user,
+		repositoryName,
+	);
+
+	if (isReleasesError || isRepositoryError) {
 		return <div>error</div>;
 	}
 
-	if (isReleasesPending) {
+	if (isReleasesPending || isRepositoryPending) {
 		return <div>Loading...</div>;
 	}
 
-	if (releases) {
-		return (
-			<div>
-				{releases.map((release: Release) => (
-					<div key={release.url}>{release.name}</div>
-				))}
-			</div>
-		);
-	}
-
-	return <>an unexpected error occured</>;
+	return (
+		<div>
+			{repository ? <div>{repository.full_name}</div> : <></>}
+			{releases ? <>{releases.length}</> : <></>}
+		</div>
+	);
 }

@@ -28,7 +28,7 @@ const Card = ({ user, repositoryName }: CardProps) => {
 		<button
 			className="card hover:bg-secondary-background cursor-pointer w-full"
 			type="button"
-			onClick={() => router.push(`/${user}/${repository}`)}
+			onClick={() => router.push(`/${user}/${repositoryName}`)}
 		>
 			{latestRelease !== undefined && repository ? (
 				<>
