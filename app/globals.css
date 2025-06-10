@@ -3,6 +3,8 @@
 @theme {
     --font-sans: Noto Sans;
     --color-text: #fff;
+    --color-secondary-text: #9198A1;
+    --color-link: #4493f8;
     --color-primary: #3EB84F;
     --color-border: #3D444D;
     --color-background: #0D1117;
