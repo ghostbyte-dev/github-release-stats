@@ -10,17 +10,17 @@ import {
 	LinkIcon,
 	StarIcon,
 } from "@phosphor-icons/react";
-
+import dynamic from "next/dynamic";
+const MyChart = dynamic(() => import("../../../components/releasesChart"), {
+	ssr: false,
+});
 export default function RepositoryDetails() {
 	const params = useParams();
 	const user = params.user as string;
 	const repositoryName = params.repository as string;
 	console.log(repositoryName);
 
-	const [releases, isReleasesPending, isReleasesError] = useReleases(
-		user,
-		repositoryName,
-	);
+	const [releases, isReleasesPending] = useReleases(user, repositoryName);
 
 	const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
@@ -45,7 +45,15 @@ export default function RepositoryDetails() {
 				)}
 			</div>
 			<div className="flex flex-row mt-10">
-				<div className="flex-2/3 card">Diagramm</div>
+				<div className="flex-2/3 card">
+					{releases ? (
+						<MyChart releases={releases} />
+					) : isReleasesPending ? (
+						<>Loading...</>
+					) : (
+						<>an error occured</>
+					)}
+				</div>
 				<div className="flex-1/3">
 					{repository ? (
 						<div className="ml-8 mt-2 gap-1 flex flex-col">
