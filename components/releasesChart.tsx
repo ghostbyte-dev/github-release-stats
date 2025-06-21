@@ -1,5 +1,14 @@
 import type { Asset, Release } from '@/types/release';
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  type TooltipProps,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import type { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 
 type ReleasesChartProps = {
   releases: Release[];
@@ -21,10 +30,21 @@ const ReleasesChart = ({ releases }: ReleasesChartProps) => {
         <Line type="monotone" dataKey="downloads" stroke="#3EB84F" isAnimationActive={true} />
         <XAxis dataKey="release" stroke="#3D444D" />
         <YAxis stroke="#3D444D" />
-        <Tooltip />
+        <Tooltip content={(value) => renderTooltip(value)} />
       </LineChart>
     </ResponsiveContainer>
   );
+};
+
+const renderTooltip = (props: TooltipProps<ValueType, NameType>) => {
+  if (props.active) {
+    return (
+      <div className="card bg-secondary-background">
+        <p className="text-lg font-bold">{props.label}:</p>
+        <p>downloads: {props.payload?.[0].value}</p>
+      </div>
+    );
+  }
 };
 
 export default ReleasesChart;
