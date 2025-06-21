@@ -20,7 +20,7 @@ const Card = ({ user, repositoryName }: CardProps) => {
   const latestRelease = releases?.find((release: Release) => release.latest);
 
   const formatLargeNumber = (number: number): string => {
-    return new Intl.NumberFormat().format(number);
+    return new Intl.NumberFormat(undefined, { notation: 'compact' }).format(number);
   };
 
   const getDownloadCount = (): number => {
@@ -62,15 +62,15 @@ const Card = ({ user, repositoryName }: CardProps) => {
           <div className="flex flex-row gap-10 items-center mt-4">
             <div className="flex flex-row gap-2">
               <StarIcon size={24} color="#e3b341" weight="fill" />
-              <p className="font-bold text-lg">{repository.stargazers_count}</p>
+              <p className="font-bold text-lg">{formatLargeNumber(repository.stargazers_count)}</p>
             </div>
             <div className="flex flex-row gap-2">
               <GitForkIcon size={24} color="#3D444D" />{' '}
-              <p className="font-bold text-lg">{repository.forks}</p>
+              <p className="font-bold text-lg">{formatLargeNumber(repository.forks)}</p>
             </div>
             <div className="flex flex-row gap-2">
               <EyeIcon size={24} color="#3D444D" />{' '}
-              <p className="font-bold text-lg">{repository.watchers_count}</p>
+              <p className="font-bold text-lg">{formatLargeNumber(repository.watchers_count)}</p>
             </div>
             <div className="flex flex-row gap-2">
               <DownloadIcon size={24} color="#3D444D" />{' '}
