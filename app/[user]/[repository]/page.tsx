@@ -129,7 +129,6 @@ export default function RepositoryDetails() {
               <a
                 className="flex flex-row gap-3 hover:text-link text-secondary-text"
                 href={repository.subscribers_url}
-                //watcher url not found
               >
                 <EyeIcon size={18} weight="bold" />
                 <div className="flex flex-row gap-1 text-sm">

@@ -7,6 +7,7 @@ import type { Asset, Release } from '@/types/release';
 import { DownloadIcon, EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import ReactionsComponent from './reactions';
 
 interface CardProps {
   user: string;
@@ -116,6 +117,13 @@ const Card = ({ user, repositoryName }: CardProps) => {
               <p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
             </div>
           ))}
+          {latestRelease.reactions ? (
+            <div className="mt-4">
+              <ReactionsComponent reactions={latestRelease.reactions} />{' '}
+            </div>
+          ) : (
+            <></>
+          )}
         </>
       ) : isReleasesPending || isRepositoryPending ? (
         <p>loading...</p>

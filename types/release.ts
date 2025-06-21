@@ -11,6 +11,7 @@ export type Release = {
   author: User;
   body: string;
   latest: boolean;
+  reactions: Reactions;
 };
 
 export type Asset = {
@@ -40,4 +41,17 @@ export type User = {
   type: string;
   user_view_type: string;
   site_admin: boolean;
+};
+
+export type Reactions = {
+  url: string;
+  total_count: number;
+  '+1': number;
+  '-1': number;
+  laugh: number;
+  hooray: number;
+  confused: number;
+  heart: number;
+  rocket: number;
+  eyes: number;
 };

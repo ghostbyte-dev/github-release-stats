@@ -3,13 +3,14 @@ import { formatTimeAgo } from '@/common/formatTimeAgo';
 import type { Asset, Release } from '@/types/release';
 import { PackageIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
+import ReactionsComponent from './reactions';
 type ReleaseCardProps = {
   release: Release;
 };
 
 const ReleaseCard = ({ release }: ReleaseCardProps) => {
   return (
-    <div className="card hover:bg-secondary-background cursor-pointer w-full">
+    <div className="card cursor-pointer w-full">
       <div className="flex flex-row gap-4 items-center">
         <a
           href={release.html_url}
@@ -59,6 +60,13 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           <p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
         </div>
       ))}
+      {release.reactions ? (
+        <div className="mt-4">
+          <ReactionsComponent reactions={release.reactions} />{' '}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
