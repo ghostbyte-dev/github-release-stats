@@ -25,15 +25,18 @@ export default function RepositoryDetails() {
     <div className="flex flex-col">
       <div>
         {repository ? (
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 items-center">
             <Image
               src={repository.owner.avatar_url}
-              height={32}
-              width={32}
+              height={48}
+              width={48}
               alt={'Avatar'}
-              className="rounded-full aspect-square"
+              className="rounded-full h-12 w-12 aspect-square"
             />
-            <h1 className="text-4xl font-bold">{repository.full_name}</h1>
+            <h1 className="text-2xl font-medium">
+              {repository.owner.login} <span className="text-gray-300 font-extralight">/</span>{' '}
+              <span className="font-bold">{repository.name}</span>
+            </h1>
           </div>
         ) : isRepositoryPending ? (
           <>Loading...</>
