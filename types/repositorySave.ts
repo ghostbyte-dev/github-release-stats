@@ -1,4 +1,4 @@
 export type RepositorySave = {
-	name: string;
-	user: string;
+  name: string;
+  user: string;
 };
