@@ -18,14 +18,13 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="p-8">
       <nav className="flex flex-row gap-52">
-        <h1 className="text-4xl font-bold">Github Release Counter</h1>
         <SearchBar onSubmit={search} />
       </nav>
       <div className="mt-10">
         {repositories && (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {repositories.map((repository: RepositorySave) => (
               <div key={repository.name + repository.user}>
                 <Card user={repository.user} repositoryName={repository.name} />

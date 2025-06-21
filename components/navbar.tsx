@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <div className="border-b border-border px-5 py-5">
       <Link href="/" className="">
-        Github Release Stats
+        <span className="font-semibold">Github Release Stats</span>
       </Link>
     </div>
   );

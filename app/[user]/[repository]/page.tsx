@@ -22,7 +22,7 @@ export default function RepositoryDetails() {
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-4 lg:p-8">
       <div>
         {repository ? (
           <div className="flex flex-row gap-4 items-center">
@@ -44,7 +44,7 @@ export default function RepositoryDetails() {
           <>an error occured</>
         )}
       </div>
-      <div className="flex flex-row mt-10">
+      <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
         <div className="flex-2/3 card">
           {releases ? (
             <MyChart releases={releases} />
@@ -56,7 +56,7 @@ export default function RepositoryDetails() {
         </div>
         <div className="flex-1/3">
           {repository ? (
-            <div className="ml-8 mt-2 gap-1 flex flex-col">
+            <div className="ml-8 gap-1 flex flex-col">
               <div className="flex flex-col gap-2">
                 <h3 className="font-bold text-xl">About</h3>
                 <p>{repository.description}</p>
@@ -106,10 +106,11 @@ export default function RepositoryDetails() {
           )}
         </div>
       </div>
+
       <div className="mt-14">
         <h2 className="text-2xl font-bold mb-4">Releases:</h2>
         {releases ? (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {releases.map((release: Release) => (
               <ReleaseCard release={release} key={release.url} />
             ))}

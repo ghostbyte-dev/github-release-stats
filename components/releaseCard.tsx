@@ -34,7 +34,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           height={24}
           width={24}
           alt={'Avatar'}
-          className="rounded-full"
+          className="rounded-full w-6 h-6"
         />
         <a
           href={release.author.html_url}
