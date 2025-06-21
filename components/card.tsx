@@ -5,7 +5,6 @@ import useRepository from '@/hooks/useRepository';
 import type { Asset, Release } from '@/types/release';
 import { DownloadIcon, EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 interface CardProps {
@@ -37,9 +36,10 @@ const Card = ({ user, repositoryName }: CardProps) => {
   };
 
   return (
-    <Link
-      className="card hover:bg-secondary-background cursor-pointer w-full h-full block "
-      href={`/${user}/${repositoryName}`}
+    <button
+      className="card hover:bg-secondary-background cursor-pointer w-full h-full flex flex-col"
+      type="button"
+      onClick={() => router.push(`/${user}/${repositoryName}`)}
     >
       {latestRelease !== undefined && repository ? (
         <>
@@ -125,7 +125,7 @@ const Card = ({ user, repositoryName }: CardProps) => {
       ) : (
         <p>an unexpected error occured</p>
       )}
-    </Link>
+    </button>
   );
 };
 
