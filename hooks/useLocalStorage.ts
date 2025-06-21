@@ -11,7 +11,6 @@ export default function useLocalStorage<T>(key: string, defaultValue: T): [T, (v
     } catch (error) {
       console.error('Local storage error:', error);
     }
-    return () => {};
   }, [key]);
 
   const setValueLocalStorage = (value: T) => {
