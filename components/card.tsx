@@ -2,7 +2,7 @@ import { convertBytes } from '@/common/bytesToSize';
 import { formatTimeAgo } from '@/common/formatTimeAgo';
 import useReleases from '@/hooks/useReleases';
 import useRepository from '@/hooks/useRepository';
-import type { Asset } from '@/types/release';
+import type { Asset, Release } from '@/types/release';
 import { EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ const Card = ({ user, repositoryName }: CardProps) => {
   const [releases, isReleasesPending] = useReleases(user, repositoryName);
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
-  const latestRelease = releases?.[0];
+  const latestRelease = releases?.find((release: Release) => release.latest);
 
   return (
     <button
@@ -85,7 +85,7 @@ const Card = ({ user, repositoryName }: CardProps) => {
             </a>
             <p>released this {formatTimeAgo(latestRelease.published_at)}</p>
           </div>
-          {latestRelease.assets.map((asset: Asset) => (
+          {latestRelease.assets.slice(0, 5).map((asset: Asset) => (
             <div key={asset.id} className="flex flex-row gap-2 mt-4 items-center">
               <PackageIcon />
               <a
