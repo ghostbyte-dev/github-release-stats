@@ -8,6 +8,7 @@ import { DownloadIcon, EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phos
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ReactionsComponent from './reactions';
+import { getAssetsDownloadCountSum } from '@/common/getAssetsDownloadCountSum';
 
 interface CardProps {
   user: string;
@@ -22,15 +23,10 @@ const Card = ({ user, repositoryName }: CardProps) => {
   const latestRelease = releases?.find((release: Release) => release.latest);
 
   const getDownloadCount = (): number => {
-    const releasesDownloads = releases?.map((release: Release) => getAssetsDownloads(release));
+    const releasesDownloads = releases?.map((release: Release) =>
+      getAssetsDownloadCountSum(release),
+    );
     return releasesDownloads?.reduce((sum: number, current: number) => sum + current) ?? 0;
-  };
-
-  const getAssetsDownloads = (release: Release): number => {
-    const assetDownloads = release.assets.map((asset: Asset) => asset.download_count);
-    return assetDownloads.length > 0
-      ? assetDownloads.reduce((sum: number, current: number) => sum + current)
-      : 0;
   };
 
   return (
