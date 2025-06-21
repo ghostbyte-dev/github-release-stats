@@ -18,7 +18,15 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
 				>
 					{release.name}
 				</a>
-				{release.latest ? <span className="badge">Latest</span> : <></>}
+				{release.latest ? (
+					<span className="badge">Latest</span>
+				) : release.draft ? (
+					<span className="badge border-warning text-warning">Draft</span>
+				) : release.prerelease ? (
+					<span className="badge border-warning text-warning">Prerelease</span>
+				) : (
+					<></>
+				)}
 			</div>
 			<div className="flex flex-row gap-2 mt-4">
 				<Image

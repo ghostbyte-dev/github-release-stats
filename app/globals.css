@@ -9,6 +9,7 @@
     --color-border: #3D444D;
     --color-background: #0D1117;
     --color-secondary-background: #212830;
+    --color-warning: #c59020;
 }
 
 @layer components {

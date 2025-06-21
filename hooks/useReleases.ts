@@ -27,8 +27,14 @@ export default function useReleases(
 		console.log("response ok");
 		const releases: Release[] = await response.json();
 
+		let latestAlreadyUsed = false;
 		const modifiedReleases = releases.map((release: Release) => {
-			release.latest = true;
+			if (release.draft || release.prerelease) {
+				release.latest = false;
+				return release;
+			}
+			release.latest = !latestAlreadyUsed;
+			latestAlreadyUsed = true;
 			return release;
 		});
 
