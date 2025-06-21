@@ -4,10 +4,19 @@ import useReleases from '@/hooks/useReleases';
 import useRepository from '@/hooks/useRepository';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { EyeIcon, GitForkIcon, LinkIcon, StarIcon } from '@phosphor-icons/react';
+import {
+  BookOpenIcon,
+  EyeIcon,
+  GitForkIcon,
+  LinkIcon,
+  PulseIcon,
+  ScalesIcon,
+  StarIcon,
+} from '@phosphor-icons/react';
 import dynamic from 'next/dynamic';
 import type { Release } from '@/types/release';
 import ReleaseCard from '@/components/releaseCard';
+import { formatLargeNumber } from '@/common/formatLargeNumber';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -69,22 +78,62 @@ export default function RepositoryDetails() {
               </div>
               <a
                 className="flex flex-row mt-4 gap-3 hover:text-link text-secondary-text"
+                href={`${repository.html_url}#readme-ov-file`}
+              >
+                <BookOpenIcon size={18} weight="bold" />
+                <div className="flex flex-row gap-1 text-sm">
+                  <p>Readme</p>
+                </div>
+              </a>
+              {repository.license ? (
+                <a
+                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                  href={`${repository.html_url}#${repository.license.spdx_id}-1-ov-file`}
+                >
+                  <ScalesIcon size={18} weight="bold" />
+                  <div className="flex flex-row gap-1 text-sm">
+                    <p>{repository.license.spdx_id}</p>
+                    <p>licence</p>
+                  </div>
+                </a>
+              ) : (
+                <a
+                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                  href={`${repository.html_url}#security-ov-file`}
+                >
+                  <ScalesIcon size={18} weight="bold" />
+                  <div className="flex flex-row gap-1 text-sm">
+                    <p>Security policy</p>
+                  </div>
+                </a>
+              )}
+              <a
+                className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                href={`${repository.html_url}/activity`}
+              >
+                <PulseIcon size={18} weight="bold" />
+                <div className="flex flex-row gap-1 text-sm">
+                  <p>Activity</p>
+                </div>
+              </a>
+              <a
+                className="flex flex-row gap-3 hover:text-link text-secondary-text"
                 href={repository.stargazers_url}
               >
-                <StarIcon size={18} />
+                <StarIcon size={18} weight="bold" />
                 <div className="flex flex-row gap-1 text-sm">
-                  <p className="font-bold">{repository.stargazers_count}</p>
+                  <p className="font-bold">{formatLargeNumber(repository.stargazers_count)}</p>
                   <p>stars</p>
                 </div>
               </a>
               <a
                 className="flex flex-row gap-3 hover:text-link text-secondary-text"
-                href={repository.watchers_url}
+                href={repository.subscribers_url}
                 //watcher url not found
               >
-                <EyeIcon size={18} />
+                <EyeIcon size={18} weight="bold" />
                 <div className="flex flex-row gap-1 text-sm">
-                  <p className="font-bold">{repository.watchers_count}</p>
+                  <p className="font-bold">{formatLargeNumber(repository.subscribers_count)}</p>
                   <p>watchers</p>
                 </div>
               </a>
@@ -92,9 +141,9 @@ export default function RepositoryDetails() {
                 className="flex flex-row gap-3 hover:text-link text-secondary-text"
                 href={repository.forks_url}
               >
-                <GitForkIcon size={18} />
+                <GitForkIcon size={18} weight="bold" />
                 <div className="flex flex-row gap-1 text-sm">
-                  <p className="font-bold">{repository.forks}</p>
+                  <p className="font-bold">{formatLargeNumber(repository.forks)}</p>
                   <p>forks</p>
                 </div>
               </a>

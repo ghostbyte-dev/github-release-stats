@@ -14,6 +14,15 @@ export type repository = {
   forks_url: string;
   stargazers_count: number;
   stargazers_url: string;
-  watchers_count: number;
-  watchers_url: string;
+  subscribers_count: number;
+  subscribers_url: string;
+  license: License | null;
+};
+
+export type License = {
+  key: string;
+  name: string;
+  spdx_id: string;
+  url: string;
+  node_id: string;
 };

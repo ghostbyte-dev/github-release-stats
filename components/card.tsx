@@ -1,4 +1,5 @@
 import { convertBytes } from '@/common/bytesToSize';
+import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { formatTimeAgo } from '@/common/formatTimeAgo';
 import useReleases from '@/hooks/useReleases';
 import useRepository from '@/hooks/useRepository';
@@ -18,10 +19,6 @@ const Card = ({ user, repositoryName }: CardProps) => {
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
   const latestRelease = releases?.find((release: Release) => release.latest);
-
-  const formatLargeNumber = (number: number): string => {
-    return new Intl.NumberFormat(undefined, { notation: 'compact' }).format(number);
-  };
 
   const getDownloadCount = (): number => {
     const releasesDownloads = releases?.map((release: Release) => getAssetsDownloads(release));
@@ -70,7 +67,7 @@ const Card = ({ user, repositoryName }: CardProps) => {
             </div>
             <div className="flex flex-row gap-2">
               <EyeIcon size={24} color="#3D444D" />{' '}
-              <p className="font-bold text-lg">{formatLargeNumber(repository.watchers_count)}</p>
+              <p className="font-bold text-lg">{formatLargeNumber(repository.subscribers_count)}</p>
             </div>
             <div className="flex flex-row gap-2">
               <DownloadIcon size={24} color="#3D444D" />{' '}
