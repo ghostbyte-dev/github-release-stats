@@ -25,7 +25,14 @@ export default function useReleases(
 			throw new Error("Network response was not ok");
 		}
 		console.log("response ok");
-		return response.json();
+		const releases: Release[] = await response.json();
+
+		const modifiedReleases = releases.map((release: Release) => {
+			release.latest = true;
+			return release;
+		});
+
+		return modifiedReleases;
 	};
 
 	return [releases, isReleasesPending, isReleasesError];

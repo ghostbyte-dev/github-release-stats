@@ -13,9 +13,11 @@ export async function GET(request: Request) {
 				Authorization: `bearer ${token}`,
 			},
 		});
-		const releases = await res.json();
-		console.log(releases);
-		return new Response(JSON.stringify(releases), {
+		const repository = await res.json();
+		console.log(
+			`rate limits remaining: ${res.headers.get("x-ratelimit-remaining")}`,
+		);
+		return new Response(JSON.stringify(repository), {
 			status: 200,
 			headers: { "Content-Type": "application/json" },
 		});

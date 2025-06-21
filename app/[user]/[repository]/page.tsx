@@ -11,6 +11,8 @@ import {
 	StarIcon,
 } from "@phosphor-icons/react";
 import dynamic from "next/dynamic";
+import type { Release } from "@/types/release";
+import ReleaseCard from "@/components/releaseCard";
 const MyChart = dynamic(() => import("../../../components/releasesChart"), {
 	ssr: false,
 });
@@ -109,7 +111,20 @@ export default function RepositoryDetails() {
 					)}
 				</div>
 			</div>
-			<div>Releases</div>
+			<div className="mt-14">
+				<h2 className="text-2xl font-bold mb-4">Releases:</h2>
+				{releases ? (
+					<div className="grid grid-cols-3 gap-4">
+						{releases.map((release: Release) => (
+							<ReleaseCard release={release} key={release.url} />
+						))}
+					</div>
+				) : isReleasesPending ? (
+					<>Loading...</>
+				) : (
+					<>error</>
+				)}
+			</div>
 		</div>
 	);
 }

@@ -10,6 +10,7 @@ export type Release = {
 	assets: Asset[];
 	author: User;
 	body: string;
+	latest: boolean;
 };
 
 export type Asset = {
