@@ -3,7 +3,7 @@ import { formatTimeAgo } from '@/common/formatTimeAgo';
 import useReleases from '@/hooks/useReleases';
 import useRepository from '@/hooks/useRepository';
 import type { Asset, Release } from '@/types/release';
-import { EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phosphor-icons/react';
+import { DownloadIcon, EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -18,6 +18,22 @@ const Card = ({ user, repositoryName }: CardProps) => {
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
   const latestRelease = releases?.find((release: Release) => release.latest);
+
+  const formatLargeNumber = (number: number): string => {
+    return new Intl.NumberFormat().format(number);
+  };
+
+  const getDownloadCount = (): number => {
+    const releasesDownloads = releases?.map((release: Release) => getAssetsDownloads(release));
+    return releasesDownloads?.reduce((sum: number, current: number) => sum + current) ?? 0;
+  };
+
+  const getAssetsDownloads = (release: Release): number => {
+    const assetDownloads = release.assets.map((asset: Asset) => asset.download_count);
+    return assetDownloads.length > 0
+      ? assetDownloads.reduce((sum: number, current: number) => sum + current)
+      : 0;
+  };
 
   return (
     <button
@@ -55,6 +71,10 @@ const Card = ({ user, repositoryName }: CardProps) => {
             <div className="flex flex-row gap-2">
               <EyeIcon size={24} color="#3D444D" />{' '}
               <p className="font-bold text-lg">{repository.watchers_count}</p>
+            </div>
+            <div className="flex flex-row gap-2">
+              <DownloadIcon size={24} color="#3D444D" />{' '}
+              <p className="font-bold text-lg">{formatLargeNumber(getDownloadCount())}</p>
             </div>
           </div>
           <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
