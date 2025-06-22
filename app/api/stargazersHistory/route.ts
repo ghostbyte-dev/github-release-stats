@@ -1,6 +1,8 @@
 import type { repository } from '@/types/repository';
 import type { Edge, StargazersHistoryData } from '@/types/stargazersHistory';
 
+const maxRequestAmount = 20;
+
 export async function GET(request: Request) {
   // For example, fetch data from your DB here
   try {
@@ -8,19 +10,28 @@ export async function GET(request: Request) {
 
     const repository = await getRepository(user, repo);
 
-    let pageCount = Math.ceil(repository.stargazers_count / 100);
+    const pageCount = Math.ceil(repository.stargazers_count / 30);
     const requestPages: number[] = [];
-    if (pageCount > 10) {
-      pageCount = 10;
+
+    if (pageCount < maxRequestAmount) {
+      requestPages.push(...range(1, pageCount));
+    } else {
+      range(1, maxRequestAmount).map((i) => {
+        requestPages.push(Math.round((i * pageCount) / maxRequestAmount) - 1);
+      });
+      if (!requestPages.includes(1)) {
+        requestPages[0] = 1;
+      }
     }
-    requestPages.push(...range(1, pageCount));
+    console.log(requestPages);
 
     const resArray = await Promise.all(
       requestPages.map((page) => {
         return getRepoStargazers(user, repo, page);
       }),
     );
-    const chartData = await formatStargazers(resArray);
+
+    const chartData = await formatStargazers(resArray, requestPages, repository.stargazers_count);
     return new Response(JSON.stringify(chartData), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -51,40 +62,60 @@ const getRepository = async (user: string, repo: string): Promise<repository> =>
   return repository;
 };
 
-const formatStargazers = async (resArray: Response[]): Promise<StargazersHistoryData[]> => {
+const formatStargazers = async (
+  resArray: Response[],
+  requestPages: number[],
+  repoStargazersCountCurrent: number,
+): Promise<StargazersHistoryData[]> => {
   /*const starRecordsData: Promise<number[]> = resArray.map(async (res: Response) => {
     const data = await res.json();
     return new Date(data.starred_at).getTime();
   });*/
 
-  let starRecordsData = await Promise.all(
+  const starRecordsData: number[][] = await Promise.all(
     resArray.map(async (res: Response) => {
       const data = await res.json();
-      if (data) {
+      if (data && Array.isArray(data)) {
         return data.map((starData: { starred_at: string }) => {
           return new Date(starData.starred_at).getTime();
         });
       }
+      return [0];
     }),
   );
 
-  starRecordsData = [].concat(...starRecordsData);
-
-  const step = Math.ceil(starRecordsData.length / 20);
   const formattedData: StargazersHistoryData[] = [];
-  for (let index = 0; index < starRecordsData.length; index += step) {
-    if (starRecordsData[index]) {
-      formattedData.push({
-        date: new Date(starRecordsData[index]).getTime(),
-        stars: index,
-      });
-    }
-  }
+  if (requestPages.length < maxRequestAmount) {
+    const numberArray: number[] = [];
+    const allStarRecordsData: number[] = numberArray.concat(...starRecordsData);
+    const step = Math.ceil(allStarRecordsData.length / 20);
 
-  formattedData.push({
-    date: new Date(starRecordsData[starRecordsData.length - 1]).getTime(),
-    stars: starRecordsData.length,
-  });
+    for (let index = 0; index < allStarRecordsData.length; index += step) {
+      if (allStarRecordsData[index]) {
+        formattedData.push({
+          date: new Date(allStarRecordsData[index]).getTime(),
+          stars: index,
+        });
+      }
+    }
+    formattedData.push({
+      date: new Date(allStarRecordsData[allStarRecordsData.length - 1]).getTime(),
+      stars: allStarRecordsData.length,
+    });
+  } else {
+    starRecordsData.map((starPage: number[], index: number) => {
+      if (starPage[0] !== 0) {
+        formattedData.push({
+          date: starPage[0],
+          stars: (requestPages[index] - 1) * 30,
+        });
+      }
+    });
+    formattedData.push({
+      date: new Date(Date.now()).getTime(),
+      stars: repoStargazersCountCurrent,
+    });
+  }
 
   const uniqueFormattedData: StargazersHistoryData[] = [];
   for (const stargazerData of formattedData) {
@@ -99,11 +130,12 @@ const formatStargazers = async (resArray: Response[]): Promise<StargazersHistory
 };
 
 const getRepoStargazers = async (user: string, repo: string, page?: number) => {
-  let url = `https://api.github.com/repos/${user}/${repo}/stargazers?per_page=100`;
+  let url = `https://api.github.com/repos/${user}/${repo}/stargazers?per_page=30`;
 
   if (page !== undefined) {
     url = `${url}&page=${page}`;
   }
+  console.log(url);
   const token = process.env.GITHUB_API_KEY ?? '';
 
   return fetch(url, {
