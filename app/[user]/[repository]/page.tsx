@@ -20,6 +20,10 @@ import { formatLargeNumber } from '@/common/formatLargeNumber';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
+
+const MyStargazersChart = dynamic(() => import('../../../components/stargazersChart'), {
+  ssr: false,
+});
 export default function RepositoryDetails() {
   const params = useParams();
   const user = params.user as string;
@@ -27,6 +31,7 @@ export default function RepositoryDetails() {
   console.log(repositoryName);
 
   const [releases, isReleasesPending] = useReleases(user, repositoryName);
+  //const [useStargazersHistory] = useStargazersHistory('ghostbyte-dev', 'pixelix');
 
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
@@ -56,7 +61,8 @@ export default function RepositoryDetails() {
       <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
         <div className="flex-2/3 card">
           {releases ? (
-            <MyChart releases={releases} />
+            //<MyChart releases={releases} />
+            <MyStargazersChart user={user} repository={repositoryName} />
           ) : isReleasesPending ? (
             <>Loading...</>
           ) : (

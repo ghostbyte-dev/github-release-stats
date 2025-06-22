@@ -1,3 +1,4 @@
+import { formatLargeNumber } from '@/common/formatLargeNumber';
 import type { Asset, Release } from '@/types/release';
 import {
   Line,
@@ -41,7 +42,7 @@ const renderTooltip = (props: TooltipProps<ValueType, NameType>) => {
     return (
       <div className="card bg-secondary-background">
         <p className="text-lg font-bold">{props.label}:</p>
-        <p>downloads: {props.payload?.[0].value}</p>
+        <p>downloads: {formatLargeNumber(props.payload?.[0].value as number)}</p>
       </div>
     );
   }
