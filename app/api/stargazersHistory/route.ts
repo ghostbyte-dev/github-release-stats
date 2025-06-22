@@ -1,3 +1,4 @@
+import type { repository } from '@/types/repository';
 import type { Edge, StargazersHistoryData } from '@/types/stargazersHistory';
 
 export async function GET(request: Request) {
@@ -5,10 +6,21 @@ export async function GET(request: Request) {
   try {
     const { user, repo } = Object.fromEntries(new URL(request.url).searchParams);
 
-    const allEdges: Edge[] = await getAllEdges([], user, repo, '');
-    console.log(allEdges);
-    const chartData = formatEdgesData(allEdges);
-    console.log(chartData);
+    const repository = await getRepository(user, repo);
+
+    let pageCount = Math.ceil(repository.stargazers_count / 100);
+    const requestPages: number[] = [];
+    if (pageCount > 10) {
+      pageCount = 10;
+    }
+    requestPages.push(...range(1, pageCount));
+
+    const resArray = await Promise.all(
+      requestPages.map((page) => {
+        return getRepoStargazers(user, repo, page);
+      }),
+    );
+    const chartData = await formatStargazers(resArray);
     return new Response(JSON.stringify(chartData), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -19,62 +31,85 @@ export async function GET(request: Request) {
   }
 }
 
-const formatEdgesData = (edges: Edge[]): StargazersHistoryData[] => {
-  console.log(edges.length);
-  const step = Math.ceil(edges.length / 20);
-  console.log(step);
-  const formattedData: StargazersHistoryData[] = [];
-  for (let index = 0; index < edges.length; index += step) {
-    if (edges[index]?.starredAt) {
-      formattedData.push({ date: new Date(edges[index].starredAt).getTime(), stars: index });
-    }
+function range(from: number, to: number): number[] {
+  const r: number[] = [];
+  for (let i = from; i <= to; i++) {
+    r.push(i);
   }
-  formattedData.push({
-    date: new Date(edges[edges.length - 1].starredAt).getTime(),
-    stars: edges.length,
+  return r;
+}
+
+const getRepository = async (user: string, repo: string): Promise<repository> => {
+  const token = process.env.GITHUB_API_KEY ?? '';
+
+  const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
   });
-  return formattedData;
+  const repository = await res.json();
+  return repository;
 };
 
-const getAllEdges = async (
-  edges: Edge[],
-  user: string,
-  repo: string,
-  cursor: string,
-): Promise<Edge[]> => {
-  const token = process.env.GITHUB_API_KEY ?? '';
-  const body = {
-    query: `query {
-        repository(owner: "${user}", name: "${repo}") {
-          stargazers (first: 100, after: "${cursor}") {
-            pageInfo {
-                endCursor
-                hasNextPage
-            }
-            edges {
-            starredAt
-            }
-            }
-        }
-        }`,
-  };
+const formatStargazers = async (resArray: Response[]): Promise<StargazersHistoryData[]> => {
+  /*const starRecordsData: Promise<number[]> = resArray.map(async (res: Response) => {
+    const data = await res.json();
+    return new Date(data.starred_at).getTime();
+  });*/
 
-  const res = await fetch('https://api.github.com/graphql', {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: { Authorization: `bearer ${token}` },
+  let starRecordsData = await Promise.all(
+    resArray.map(async (res: Response) => {
+      const data = await res.json();
+      if (data) {
+        return data.map((starData: { starred_at: string }) => {
+          return new Date(starData.starred_at).getTime();
+        });
+      }
+    }),
+  );
+
+  starRecordsData = [].concat(...starRecordsData);
+
+  const step = Math.ceil(starRecordsData.length / 20);
+  const formattedData: StargazersHistoryData[] = [];
+  for (let index = 0; index < starRecordsData.length; index += step) {
+    if (starRecordsData[index]) {
+      formattedData.push({
+        date: new Date(starRecordsData[index]).getTime(),
+        stars: index,
+      });
+    }
+  }
+
+  formattedData.push({
+    date: new Date(starRecordsData[starRecordsData.length - 1]).getTime(),
+    stars: starRecordsData.length,
   });
 
-  const data = await res.json();
-  console.log(data);
-  const newEdges = data.data.repository.stargazers.edges;
-  if (!data.data.repository.stargazers.pageInfo.hasNextPage) {
-    return edges.concat(newEdges);
+  const uniqueFormattedData: StargazersHistoryData[] = [];
+  for (const stargazerData of formattedData) {
+    if (uniqueFormattedData.find((element) => element.date === stargazerData.date) === undefined) {
+      console.log(stargazerData);
+      uniqueFormattedData.push(stargazerData);
+    }
   }
-  return await getAllEdges(
-    edges.concat(newEdges),
-    user,
-    repo,
-    data.data.repository.stargazers.pageInfo.endCursor,
-  );
+
+  console.log(uniqueFormattedData);
+  return uniqueFormattedData;
+};
+
+const getRepoStargazers = async (user: string, repo: string, page?: number) => {
+  let url = `https://api.github.com/repos/${user}/${repo}/stargazers?per_page=100`;
+
+  if (page !== undefined) {
+    url = `${url}&page=${page}`;
+  }
+  const token = process.env.GITHUB_API_KEY ?? '';
+
+  return fetch(url, {
+    headers: {
+      Accept: 'application/vnd.github.v3.star+json',
+      Authorization: token ? `token ${token}` : '',
+    },
+  });
 };
