@@ -17,6 +17,7 @@ import dynamic from 'next/dynamic';
 import type { Release } from '@/types/release';
 import ReleaseCard from '@/components/releaseCard';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
+import { useState } from 'react';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -28,8 +29,8 @@ export default function RepositoryDetails() {
   const params = useParams();
   const user = params.user as string;
   const repositoryName = params.repository as string;
-  console.log(repositoryName);
 
+  const [isDownloadChart, setIsDownloadChart] = useState<boolean>(true);
   const [releases, isReleasesPending] = useReleases(user, repositoryName);
   //const [useStargazersHistory] = useStargazersHistory('ghostbyte-dev', 'pixelix');
 
@@ -59,15 +60,37 @@ export default function RepositoryDetails() {
         )}
       </div>
       <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
-        <div className="flex-2/3 card">
-          {releases ? (
-            //<MyChart releases={releases} />
-            <MyStargazersChart user={user} repository={repositoryName} />
-          ) : isReleasesPending ? (
-            <>Loading...</>
-          ) : (
-            <>an error occured</>
-          )}
+        <div className="flex-2/3">
+          <button
+            type="button"
+            onClick={() => setIsDownloadChart(true)}
+            className={`${isDownloadChart ? 'bg-link' : 'bg-secondary-background'}`}
+          >
+            downloads
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsDownloadChart(false)}
+            className={`${!isDownloadChart ? 'bg-link' : 'bg-secondary-background'}`}
+          >
+            stargazers
+          </button>
+
+          <div className="card">
+            {isDownloadChart ? (
+              <>
+                {releases ? (
+                  <MyChart releases={releases} />
+                ) : isReleasesPending ? (
+                  <>Loading...</>
+                ) : (
+                  <>an error occured</>
+                )}
+              </>
+            ) : (
+              <MyStargazersChart user={user} repository={repositoryName} />
+            )}
+          </div>
         </div>
         <div className="flex-1/3">
           {repository ? (
