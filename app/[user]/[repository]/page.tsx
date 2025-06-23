@@ -18,6 +18,7 @@ import type { Release } from '@/types/release';
 import ReleaseCard from '@/components/releaseCard';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { useState } from 'react';
+import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -61,7 +62,7 @@ export default function RepositoryDetails() {
       </div>
       <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
         <div className="flex-2/3 card p-0">
-          <div className="bg-secondary-background-dark py-2 pl-4 rounded-md">
+          <div className="bg-secondary-background-dark py-2 px-2 rounded-md flex justify-between items-center">
             <div className="border-border border-1 w-min flex rounded-md gap-1 bg-secondary-background">
               <button
                 type="button"
@@ -77,6 +78,21 @@ export default function RepositoryDetails() {
               >
                 Stars
               </button>
+            </div>
+            <div>
+              {!isDownloadChart ? (
+                <p>{repository?.stargazers_count} stars</p>
+              ) : (
+                <>
+                  {releases ? (
+                    <p>
+                      {formatLargeNumber(getReleasesDownloadsCount(releases))} downloads overall
+                    </p>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )}
             </div>
           </div>
           <hr className="h-[1px] border-t-0 rounded-full bg-border" />

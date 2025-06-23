@@ -8,7 +8,7 @@ import { DownloadIcon, EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phos
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ReactionsComponent from './reactions';
-import { getAssetsDownloadCountSum } from '@/common/getAssetsDownloadCountSum';
+import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 
 interface CardProps {
   user: string;
@@ -21,13 +21,6 @@ const Card = ({ user, repositoryName }: CardProps) => {
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
   const latestRelease = releases?.find((release: Release) => release.latest);
-
-  const getDownloadCount = (): number => {
-    const releasesDownloads = releases?.map((release: Release) =>
-      getAssetsDownloadCountSum(release),
-    );
-    return releasesDownloads?.reduce((sum: number, current: number) => sum + current) ?? 0;
-  };
 
   return (
     <button
@@ -68,7 +61,9 @@ const Card = ({ user, repositoryName }: CardProps) => {
             </div>
             <div className="flex flex-row gap-2">
               <DownloadIcon size={24} color="#3D444D" />{' '}
-              <p className="font-bold text-lg">{formatLargeNumber(getDownloadCount())}</p>
+              <p className="font-bold text-lg">
+                {formatLargeNumber(getReleasesDownloadsCount(releases ?? []))}
+              </p>
             </div>
           </div>
           <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />

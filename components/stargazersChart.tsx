@@ -45,7 +45,7 @@ const renderTooltip = (props: TooltipProps<ValueType, NameType>) => {
 
         {props.payload?.[0] ? (
           <p className="text-lg font-bold">
-            {formatLargeNumber(props.payload[0].value as number)}{' '}
+            {formatLargeNumber(props.payload[0].value as number)} stars
           </p>
         ) : (
           <></>
