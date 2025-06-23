@@ -60,23 +60,28 @@ export default function RepositoryDetails() {
         )}
       </div>
       <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
-        <div className="flex-2/3">
-          <button
-            type="button"
-            onClick={() => setIsDownloadChart(true)}
-            className={`${isDownloadChart ? 'bg-link' : 'bg-secondary-background'}`}
-          >
-            downloads
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsDownloadChart(false)}
-            className={`${!isDownloadChart ? 'bg-link' : 'bg-secondary-background'}`}
-          >
-            stargazers
-          </button>
+        <div className="flex-2/3 card p-0">
+          <div className="bg-secondary-background-dark py-2 pl-4 rounded-md">
+            <div className="border-border border-1 w-min flex rounded-md gap-1 bg-secondary-background">
+              <button
+                type="button"
+                onClick={() => setIsDownloadChart(true)}
+                className={`${isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+              >
+                Downloads
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsDownloadChart(false)}
+                className={`${!isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+              >
+                Stars
+              </button>
+            </div>
+          </div>
+          <hr className="h-[1px] border-t-0 rounded-full bg-border" />
 
-          <div className="card">
+          <div className="mt-2">
             {isDownloadChart ? (
               <>
                 {releases ? (

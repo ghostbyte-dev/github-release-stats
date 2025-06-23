@@ -7,9 +7,12 @@
     --color-link: #4493f8;
     --color-primary: #3EB84F;
     --color-border: #3D444D;
+    --color-border-bright: #656c76;
     --color-background: #0D1117;
     --color-background-dark: #010409;
     --color-secondary-background: #212830;
+    --color-secondary-background-dark: #151b23;
+
     --color-warning: #c59020;
 }
 
