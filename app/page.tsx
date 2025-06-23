@@ -33,7 +33,7 @@ export default function Home() {
       <div className="mt-10">
         {repositories && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {repositories.map((repository: RepositorySave) => (
+            {repositories.toReversed().map((repository: RepositorySave) => (
               <div key={repository.name + repository.user}>
                 <Card
                   user={repository.user}

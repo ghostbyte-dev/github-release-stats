@@ -17,7 +17,7 @@ import dynamic from 'next/dynamic';
 import type { Release } from '@/types/release';
 import ReleaseCard from '@/components/releaseCard';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
@@ -33,9 +33,15 @@ export default function RepositoryDetails() {
 
   const [isDownloadChart, setIsDownloadChart] = useState<boolean>(true);
   const [releases, isReleasesPending] = useReleases(user, repositoryName);
-  //const [useStargazersHistory] = useStargazersHistory('ghostbyte-dev', 'pixelix');
 
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
+
+  useEffect(() => {
+    console.log(releases?.length);
+    if (releases && releases.length === 0) {
+      setIsDownloadChart(false);
+    }
+  }, [releases]);
 
   return (
     <div className="flex flex-col p-4 lg:p-8">
@@ -84,7 +90,7 @@ export default function RepositoryDetails() {
                 <p>{repository?.stargazers_count} stars</p>
               ) : (
                 <>
-                  {releases ? (
+                  {releases && releases.length > 0 ? (
                     <p>
                       {formatLargeNumber(getReleasesDownloadsCount(releases))} downloads overall
                     </p>
@@ -100,12 +106,12 @@ export default function RepositoryDetails() {
           <div className="mt-2">
             {isDownloadChart ? (
               <>
-                {releases ? (
+                {releases && releases.length > 0 ? (
                   <MyChart releases={releases} />
                 ) : isReleasesPending ? (
                   <>Loading...</>
                 ) : (
-                  <>an error occured</>
+                  <>No Releases exist for this repository</>
                 )}
               </>
             ) : (

@@ -25,7 +25,7 @@ interface CardProps {
 
 const Card = ({ user, repositoryName, remove }: CardProps) => {
   const router = useRouter();
-  const [releases, isReleasesPending] = useReleases(user, repositoryName);
+  const [releases] = useReleases(user, repositoryName);
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
   const latestRelease = releases?.find((release: Release) => release.latest);
@@ -36,7 +36,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
       type="button"
       onClick={() => router.push(`/${user}/${repositoryName}`)}
     >
-      {latestRelease !== undefined && repository ? (
+      {repository ? (
         <>
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row gap-4 items-center">
@@ -52,6 +52,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 onClick={(e) => e.stopPropagation()}
                 className="text-2xl font-bold hover:underline"
               >
+                releases
                 {repository.full_name}
               </a>
             </div>
@@ -79,64 +80,75 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
               <EyeIcon size={24} color="#3D444D" />{' '}
               <p className="font-bold text-lg">{formatLargeNumber(repository.subscribers_count)}</p>
             </div>
-            <div className="flex flex-row gap-2">
-              <DownloadIcon size={24} color="#3D444D" />{' '}
-              <p className="font-bold text-lg">
-                {formatLargeNumber(getReleasesDownloadsCount(releases ?? []))}
-              </p>
-            </div>
+            {releases && (releases?.length ?? [].length) > 0 ? (
+              <div className="flex flex-row gap-2">
+                <DownloadIcon size={24} color="#3D444D" />{' '}
+                <p className="font-bold text-lg">
+                  {formatLargeNumber(getReleasesDownloadsCount(releases))}
+                </p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-          <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
-          <div className="flex flex-row gap-4 items-center">
-            <a
-              href={latestRelease.html_url}
-              onClick={(e) => e.stopPropagation()}
-              className="text-xl font-bold hover:underline"
-            >
-              {latestRelease.name}
-            </a>
-            <span className="badge">Latest</span>
-          </div>
-          <div className="flex flex-row gap-2 mt-4">
-            <Image
-              src={latestRelease.author.avatar_url}
-              height={24}
-              width={24}
-              alt={'Avatar'}
-              className="rounded-full"
-            />
-            <a
-              href={latestRelease.author.html_url}
-              onClick={(e) => e.stopPropagation()}
-              className="font-bold hover:underline"
-            >
-              {latestRelease.author.login}
-            </a>
-            <p>released this {formatTimeAgo(latestRelease.published_at)}</p>
-          </div>
-          {latestRelease.assets.slice(0, 5).map((asset: Asset) => (
-            <div key={asset.id} className="flex flex-row gap-2 mt-4 items-center">
-              <PackageIcon />
-              <a
-                href={asset.browser_download_url}
-                onClick={(e) => e.stopPropagation()}
-                className="font-bold hover:underline"
-              >
-                {asset.name}
-              </a>
-              <p className="ml-4">&#9900; {asset.download_count} downloads</p>
-              <p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
-            </div>
-          ))}
-          {latestRelease.reactions ? (
-            <div className="mt-4">
-              <ReactionsComponent reactions={latestRelease.reactions} />{' '}
-            </div>
+          {latestRelease !== undefined ? (
+            <>
+              <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
+
+              <div className="flex flex-row gap-4 items-center">
+                <a
+                  href={latestRelease.html_url}
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-xl font-bold hover:underline"
+                >
+                  {latestRelease.name}
+                </a>
+                <span className="badge">Latest</span>
+              </div>
+              <div className="flex flex-row gap-2 mt-4">
+                <Image
+                  src={latestRelease.author.avatar_url}
+                  height={24}
+                  width={24}
+                  alt={'Avatar'}
+                  className="rounded-full"
+                />
+                <a
+                  href={latestRelease.author.html_url}
+                  onClick={(e) => e.stopPropagation()}
+                  className="font-bold hover:underline"
+                >
+                  {latestRelease.author.login}
+                </a>
+                <p>released this {formatTimeAgo(latestRelease.published_at)}</p>
+              </div>
+              {latestRelease.assets.slice(0, 5).map((asset: Asset) => (
+                <div key={asset.id} className="flex flex-row gap-2 mt-4 items-center">
+                  <PackageIcon />
+                  <a
+                    href={asset.browser_download_url}
+                    onClick={(e) => e.stopPropagation()}
+                    className="font-bold hover:underline"
+                  >
+                    {asset.name}
+                  </a>
+                  <p className="ml-4">&#9900; {asset.download_count} downloads</p>
+                  <p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
+                </div>
+              ))}
+              {latestRelease.reactions ? (
+                <div className="mt-4">
+                  <ReactionsComponent reactions={latestRelease.reactions} />{' '}
+                </div>
+              ) : (
+                <></>
+              )}
+            </>
           ) : (
             <></>
           )}
         </>
-      ) : isReleasesPending || isRepositoryPending ? (
+      ) : isRepositoryPending ? (
         <p>loading...</p>
       ) : (
         <div className="flex flex-row justify-between">
