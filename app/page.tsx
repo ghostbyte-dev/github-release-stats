@@ -17,6 +17,14 @@ export default function Home() {
     setRepositories([...repositories, { name: search.repo, user: search.user }]);
   };
 
+  const removeRepository = (user: string, repo: string) => {
+    setRepositories(
+      repositories.filter(
+        (repoSave: RepositorySave) => repoSave.name !== repo || repoSave.user !== user,
+      ),
+    );
+  };
+
   return (
     <div className="p-8">
       <nav className="flex flex-row gap-52">
@@ -27,7 +35,11 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {repositories.map((repository: RepositorySave) => (
               <div key={repository.name + repository.user}>
-                <Card user={repository.user} repositoryName={repository.name} />
+                <Card
+                  user={repository.user}
+                  repositoryName={repository.name}
+                  remove={() => removeRepository(repository.user, repository.name)}
+                />
               </div>
             ))}
           </div>

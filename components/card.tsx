@@ -4,7 +4,14 @@ import { formatTimeAgo } from '@/common/formatTimeAgo';
 import useReleases from '@/hooks/useReleases';
 import useRepository from '@/hooks/useRepository';
 import type { Asset, Release } from '@/types/release';
-import { DownloadIcon, EyeIcon, GitForkIcon, PackageIcon, StarIcon } from '@phosphor-icons/react';
+import {
+  DownloadIcon,
+  EyeIcon,
+  GitForkIcon,
+  PackageIcon,
+  StarIcon,
+  TrashIcon,
+} from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ReactionsComponent from './reactions';
@@ -13,9 +20,10 @@ import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 interface CardProps {
   user: string;
   repositoryName: string;
+  remove: () => void;
 }
 
-const Card = ({ user, repositoryName }: CardProps) => {
+const Card = ({ user, repositoryName, remove }: CardProps) => {
   const router = useRouter();
   const [releases, isReleasesPending] = useReleases(user, repositoryName);
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
@@ -30,21 +38,33 @@ const Card = ({ user, repositoryName }: CardProps) => {
     >
       {latestRelease !== undefined && repository ? (
         <>
-          <div className="flex flex-row gap-4 items-center">
-            <Image
-              src={repository.owner.avatar_url}
-              height={32}
-              width={32}
-              alt={'Avatar'}
-              className="rounded-full"
-            />
-            <a
-              href={repository.html_url}
-              onClick={(e) => e.stopPropagation()}
-              className="text-2xl font-bold hover:underline"
-            >
-              {repository.full_name}
-            </a>
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row gap-4 items-center">
+              <Image
+                src={repository.owner.avatar_url}
+                height={32}
+                width={32}
+                alt={'Avatar'}
+                className="rounded-full"
+              />
+              <a
+                href={repository.html_url}
+                onClick={(e) => e.stopPropagation()}
+                className="text-2xl font-bold hover:underline"
+              >
+                {repository.full_name}
+              </a>
+            </div>
+            <div>
+              <TrashIcon
+                size={24}
+                className="cursor-pointer hover:text-red-400"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  remove();
+                }}
+              />
+            </div>
           </div>
           <div className="flex flex-row gap-10 items-center mt-4">
             <div className="flex flex-row gap-2">
@@ -119,7 +139,17 @@ const Card = ({ user, repositoryName }: CardProps) => {
       ) : isReleasesPending || isRepositoryPending ? (
         <p>loading...</p>
       ) : (
-        <p>an unexpected error occured</p>
+        <div className="flex flex-row justify-between">
+          <p>an unexpected error occured</p>
+          <TrashIcon
+            size={24}
+            className="cursor-pointer hover:text-red-400"
+            onClick={(e) => {
+              e.stopPropagation();
+              remove();
+            }}
+          />
+        </div>
       )}
     </button>
   );
