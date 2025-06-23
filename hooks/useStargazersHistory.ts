@@ -15,7 +15,10 @@ export default function useStargazersHistory(
   });
 
   const fetchStargazersHistory = async (user: string, repository: string): Promise<Release[]> => {
-    const response = await fetch(`/api/stargazersHistory?user=${user}&repo=${repository}`);
+    const response = await fetch(`/api/stargazersHistory?user=${user}&repo=${repository}`, {
+      cache: 'force-cache',
+      next: { revalidate: 86400 },
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
