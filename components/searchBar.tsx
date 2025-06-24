@@ -18,9 +18,14 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4">
-      <Input value={user} onChange={setUser} label="User:" placeholder="username / organization" />
-      <Input value={repo} onChange={setRepo} label="Repository:" placeholder="repository" />
+    <div className="flex flex-col w-full md:max-w-md gap-4">
+      <Input
+        value={user}
+        onChange={setUser}
+        label="Username:"
+        placeholder="Username / Organization"
+      />
+      <Input value={repo} onChange={setRepo} label="Repository:" placeholder="Repository" />
       <button
         type="button"
         onClick={() => submit({ user, repo })}

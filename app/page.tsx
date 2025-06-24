@@ -47,8 +47,8 @@ export default function Home() {
   return (
     <>
       <title>Github Release Stats</title>
-      <div className="p-8">
-        <nav className="flex flex-row gap-52">
+      <div className="p-4 lg:p-8">
+        <nav className="flex justify-center">
           <SearchBar onSubmit={search} />
         </nav>
         <div className="mt-10">
