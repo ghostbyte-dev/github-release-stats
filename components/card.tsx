@@ -57,7 +57,6 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 onClick={(e) => e.stopPropagation()}
                 className="text-2xl font-bold hover:underline"
               >
-                releases
                 {repository.full_name}
               </a>
             </div>

@@ -20,7 +20,9 @@ export default function Home() {
 
   const search = (search: Search) => {
     if (repositories.some((repo) => repo.name === search.repo && repo.user === search.user)) {
-      //toast already exsits
+      toast('This Repository is already added', {
+        icon: '🛈',
+      });
       return;
     }
     repositoryMutation.mutate(search);
