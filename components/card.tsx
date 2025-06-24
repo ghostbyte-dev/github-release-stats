@@ -32,7 +32,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
 
   const latestRelease = releases?.find((release: Release) => release.latest);
 
-  if (isRepositoryError || !repository?.name) {
+  if (isRepositoryError) {
     return <div className="card">an error occured</div>;
   }
   return (
