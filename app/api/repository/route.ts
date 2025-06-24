@@ -13,6 +13,12 @@ export async function GET(request: Request) {
     });
     const repository = await res.json();
     console.log(`rate limits remaining: ${res.headers.get('x-ratelimit-remaining')}`);
+    if (res.status !== 200) {
+      return new Response(JSON.stringify(repository), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
     return new Response(JSON.stringify(repository), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

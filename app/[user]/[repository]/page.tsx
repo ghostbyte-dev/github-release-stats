@@ -1,7 +1,7 @@
 'use client';
 
 import useReleases from '@/hooks/useReleases';
-import useRepository from '@/hooks/useRepository';
+import { useRepository } from '@/hooks/useRepository';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import {

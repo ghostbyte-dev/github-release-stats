@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Navbar from '@/components/navbar';
 import type React from 'react';
+import { Toaster } from 'react-hot-toast';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,6 +33,7 @@ export default function RootLayout({
           {children}
 
           <ReactQueryDevtools initialIsOpen={false} />
+          <Toaster />
         </QueryClientProvider>
       </body>
     </html>

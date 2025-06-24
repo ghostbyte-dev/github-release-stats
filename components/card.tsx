@@ -2,7 +2,7 @@ import { convertBytes } from '@/common/bytesToSize';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { formatTimeAgo } from '@/common/formatTimeAgo';
 import useReleases from '@/hooks/useReleases';
-import useRepository from '@/hooks/useRepository';
+import { useRepository } from '@/hooks/useRepository';
 import type { Asset, Release } from '@/types/release';
 import {
   DownloadIcon,
@@ -16,6 +16,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ReactionsComponent from './reactions';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 interface CardProps {
   user: string;
@@ -26,10 +28,13 @@ interface CardProps {
 const Card = ({ user, repositoryName, remove }: CardProps) => {
   const router = useRouter();
   const [releases] = useReleases(user, repositoryName);
-  const [repository, isRepositoryPending] = useRepository(user, repositoryName);
+  const [repository, isRepositoryPending, isRepositoryError] = useRepository(user, repositoryName);
 
   const latestRelease = releases?.find((release: Release) => release.latest);
 
+  if (isRepositoryError || !repository?.name) {
+    return <div className="card">an error occured</div>;
+  }
   return (
     <button
       className="card hover:bg-secondary-background cursor-pointer w-full h-full flex flex-col"
