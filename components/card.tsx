@@ -13,11 +13,9 @@ import {
   TrashIcon,
 } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import ReactionsComponent from './reactions';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 interface CardProps {
   user: string;
@@ -26,7 +24,6 @@ interface CardProps {
 }
 
 const Card = ({ user, repositoryName, remove }: CardProps) => {
-  const router = useRouter();
   const [releases] = useReleases(user, repositoryName);
   const [repository, isRepositoryPending, isRepositoryError] = useRepository(user, repositoryName);
 
@@ -36,10 +33,10 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
     return <div className="card">an error occured</div>;
   }
   return (
-    <button
+    <Link
+      href={`/${user}/${repositoryName}`}
       className="card hover:bg-secondary-background cursor-pointer w-full h-full flex flex-col"
       type="button"
-      onClick={() => router.push(`/${user}/${repositoryName}`)}
     >
       {repository ? (
         <>
@@ -52,13 +49,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 alt={'Avatar'}
                 className="rounded-full"
               />
-              <a
-                href={repository.html_url}
-                onClick={(e) => e.stopPropagation()}
-                className="text-2xl font-bold hover:underline"
-              >
-                {repository.full_name}
-              </a>
+              <span className="text-2xl font-bold">{repository.full_name}</span>
             </div>
             <div>
               <TrashIcon
@@ -100,13 +91,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
               <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
 
               <div className="flex flex-row gap-4 items-center">
-                <a
-                  href={latestRelease.html_url}
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-xl font-bold hover:underline"
-                >
-                  {latestRelease.name}
-                </a>
+                <span className="text-xl font-bold">{latestRelease.name}</span>
                 <span className="badge">Latest</span>
               </div>
               <div className="flex flex-row gap-2 mt-4">
@@ -117,25 +102,13 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                   alt={'Avatar'}
                   className="rounded-full"
                 />
-                <a
-                  href={latestRelease.author.html_url}
-                  onClick={(e) => e.stopPropagation()}
-                  className="font-bold hover:underline"
-                >
-                  {latestRelease.author.login}
-                </a>
+                <span className="font-bold">{latestRelease.author.login}</span>
                 <p>released this {formatTimeAgo(latestRelease.published_at)}</p>
               </div>
               {latestRelease.assets.slice(0, 5).map((asset: Asset) => (
                 <div key={asset.id} className="flex flex-row gap-2 mt-4 items-center">
                   <PackageIcon />
-                  <a
-                    href={asset.browser_download_url}
-                    onClick={(e) => e.stopPropagation()}
-                    className="font-bold hover:underline"
-                  >
-                    {asset.name}
-                  </a>
+                  <span className="font-bold">{asset.name}</span>
                   <p className="ml-4">&#9900; {asset.download_count} downloads</p>
                   <p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
                 </div>
@@ -167,7 +140,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
           />
         </div>
       )}
-    </button>
+    </Link>
   );
 };
 
