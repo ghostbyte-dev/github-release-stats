@@ -45,24 +45,27 @@ export default function Home() {
   };
 
   return (
-    <div className="p-8">
-      <nav className="flex flex-row gap-52">
-        <SearchBar onSubmit={search} />
-      </nav>
-      <div className="mt-10">
-        {repositories && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {repositories.toReversed().map((repository: RepositorySave) => (
-              <Card
-                user={repository.user}
-                repositoryName={repository.name}
-                remove={() => removeRepository(repository.user, repository.name)}
-                key={repository.name + repository.user}
-              />
-            ))}
-          </div>
-        )}
+    <>
+      <title>Github Release Stats</title>
+      <div className="p-8">
+        <nav className="flex flex-row gap-52">
+          <SearchBar onSubmit={search} />
+        </nav>
+        <div className="mt-10">
+          {repositories && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {repositories.toReversed().map((repository: RepositorySave) => (
+                <Card
+                  user={repository.user}
+                  repositoryName={repository.name}
+                  remove={() => removeRepository(repository.user, repository.name)}
+                  key={repository.name + repository.user}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

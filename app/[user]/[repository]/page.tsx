@@ -37,6 +37,10 @@ export default function RepositoryDetails() {
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
   useEffect(() => {
+    document.title = `${user}/${repositoryName} - Github Release Stats`;
+  }, [user, repositoryName]);
+
+  useEffect(() => {
     console.log(releases?.length);
     if (releases && releases.length === 0) {
       setIsDownloadChart(false);
