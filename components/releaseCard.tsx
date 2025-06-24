@@ -67,17 +67,22 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
 
       <h3 className="text-xl font-bold">Assets:</h3>
       {getAssets().map((asset: Asset) => (
-        <div key={asset.id} className="flex flex-row gap-2 mt-4 items-center">
-          <PackageIcon />
-          <a
-            href={asset.browser_download_url}
-            onClick={(e) => e.stopPropagation()}
-            className="font-bold hover:underline"
-          >
-            {asset.name}
-          </a>
-          <p className="ml-4">&#9900; {asset.download_count} downloads</p>
-          <p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
+        <div key={asset.id} className="flex flex-row gap-2 mt-5 items-center">
+          <PackageIcon size={24} />
+          <div>
+            <a
+              href={asset.browser_download_url}
+              onClick={(e) => e.stopPropagation()}
+              className="font-bold hover:underline"
+            >
+              {asset.name}
+            </a>
+
+            <div className="flex space-x-5 mt-1">
+              <p className="">{asset.download_count} downloads</p>
+              <p className="">{convertBytes(asset.size)}</p>
+            </div>
+          </div>
         </div>
       ))}
       {release.assets.length >= 5 && !isExpandedAssets ? (
