@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryClientProvider client={queryClient}>
           <Navbar />
-          {children}
+          <div className="w-full pt-[81px]">{children}</div>
 
           <ReactQueryDevtools initialIsOpen={false} />
           <Toaster />
