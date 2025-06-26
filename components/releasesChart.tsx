@@ -40,7 +40,7 @@ const ReleasesChart = ({ releases }: ReleasesChartProps) => {
 const renderTooltip = (props: TooltipProps<ValueType, NameType>) => {
   if (props.active) {
     return (
-      <div className="card bg-secondary-background">
+      <div className="card bg-bg-secondary">
         <p className="text-lg font-bold">{props.label}:</p>
         <p>downloads: {formatLargeNumber(props.payload?.[0].value as number)}</p>
       </div>

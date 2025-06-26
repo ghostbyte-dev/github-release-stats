@@ -2,6 +2,7 @@
 
 import Card from '@/components/card';
 import SearchBar from '@/components/searchBar';
+import ThemeSwitch from '@/components/themeSwitch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { fetchRepository } from '@/hooks/useRepository';
 import type { repository } from '@/types/repository';
@@ -53,6 +54,7 @@ export default function Home() {
           <nav className="flex justify-center">
             <SearchBar onSubmit={search} />
           </nav>
+          <ThemeSwitch />
           <div className="mt-10">
             {repositories && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

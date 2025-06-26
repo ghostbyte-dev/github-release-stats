@@ -29,7 +29,7 @@ const SearchBar = (props: SearchBarProps) => {
       <button
         type="button"
         onClick={() => submit({ user, repo })}
-        className="bg-secondary-background rounded-lg py-2 px-4 cursor-pointer"
+        className="bg-btn-default-bgColor hover:bg-btn-default-bgColor-hover rounded-lg py-2 px-4 cursor-pointer border-border border-[1px]"
       >
         Search
       </button>
