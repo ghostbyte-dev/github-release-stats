@@ -57,6 +57,8 @@ const getRepository = async (user: string, repo: string): Promise<repository> =>
     headers: {
       Authorization: `bearer ${token}`,
     },
+    cache: 'force-cache',
+    next: { revalidate: 86400 },
   });
   const repository = await res.json();
   return repository;
@@ -143,5 +145,7 @@ const getRepoStargazers = async (user: string, repo: string, page?: number) => {
       Accept: 'application/vnd.github.v3.star+json',
       Authorization: token ? `token ${token}` : '',
     },
+    cache: 'force-cache',
+    next: { revalidate: 86400 },
   });
 };

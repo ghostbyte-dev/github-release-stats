@@ -10,6 +10,8 @@ export async function GET(request: Request) {
       headers: {
         Authorization: `bearer ${token}`,
       },
+      cache: 'force-cache',
+      next: { revalidate: 86400 },
     });
     const repository = await res.json();
     console.log(`rate limits remaining: ${res.headers.get('x-ratelimit-remaining')}`);

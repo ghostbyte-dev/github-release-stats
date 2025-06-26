@@ -12,6 +12,8 @@ export async function GET(request: Request) {
       headers: {
         Authorization: `bearer ${token}`,
       },
+      cache: 'force-cache',
+      next: { revalidate: 86400 },
     });
     const releases: Release[] = await res.json();
     return new Response(JSON.stringify(releases), {
