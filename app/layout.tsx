@@ -26,7 +26,7 @@ export default function RootLayout({
   const queryClient = new QueryClient();
 
   return (
-    <html lang="en" className="bg-background text-text">
+    <html lang="en" className="bg-bg text-text">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryClientProvider client={queryClient}>
           <Navbar />

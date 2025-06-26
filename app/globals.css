@@ -2,18 +2,44 @@
 
 @theme {
     --font-sans: Noto Sans;
-    --color-text: #fff;
-    --color-secondary-text: #9198A1;
+    --color-text: #1f2328;
+    --color-secondary-text: #59636e;
     --color-link: #4493f8;
-    --color-primary: #3EB84F;
-    --color-border: #3D444D;
-    --color-border-bright: #656c76;
-    --color-background: #0D1117;
-    --color-background-dark: #010409;
-    --color-secondary-background: #212830;
-    --color-secondary-background-dark: #151b23;
+    --color-primary: #1f883d;
+    --color-border: #d1d9e0;
+    --color-bg: #fff;
+    --color-bg-secondary: #f6f8fa;
 
-    --color-warning: #c59020;
+    --color-btn-default-bgColor: #f6f8fa;
+    --color-btn-default-bgColor-hover: #eff2f5;
+
+    --color-switch-active: #fff;
+    --color-switch-inactive: #e6eaef;
+    --color-switch-border-active: #818b98;
+
+    --color-warning: #9a6700;
+}
+
+@layer base {
+    [data-theme='dark'] {
+        --font-sans: Noto Sans;
+        --color-text: #f0f6fc;
+        --color-secondary-text: #9198A1;
+        --color-link: #4493f8;
+        --color-primary: #3EB84F;
+        --color-border: #3D444D;
+        --color-bg: #0D1117;
+        --color-bg-secondary: #151b23;
+
+        --color-btn-default-bgColor: #212830;
+        --color-btn-default-bgColor-hover: #283039;
+
+        --color-switch-active: #010409;
+        --color-switch-inactive: #212830;
+        --color-switch-border-active: #656c76;
+
+        --color-warning: #c59020;
+    }
 }
 
 @layer components {

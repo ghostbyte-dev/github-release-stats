@@ -79,19 +79,19 @@ export default function RepositoryDetails() {
         </div>
         <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
           <div className="flex-2/3 card p-0">
-            <div className="bg-secondary-background-dark py-2 px-2 rounded-md flex justify-between items-center">
-              <div className="border-border border-1 w-min flex rounded-md gap-1 bg-secondary-background">
+            <div className="bg-bg-secondary py-2 px-2 rounded-md flex justify-between items-center">
+              <div className="border-border border-1 w-min flex rounded-md gap-1 bg-switch-inactive">
                 <button
                   type="button"
                   onClick={() => setIsDownloadChart(true)}
-                  className={`${isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+                  className={`${isDownloadChart ? 'bg-switch-active border-switch-border-active border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
                 >
                   Downloads
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsDownloadChart(false)}
-                  className={`${!isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+                  className={`${!isDownloadChart ? 'bg-switch-active border-switch-border-active border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
                 >
                   Stars
                 </button>

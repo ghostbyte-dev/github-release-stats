@@ -35,7 +35,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
   return (
     <Link
       href={`/${user}/${repositoryName}`}
-      className="card hover:bg-secondary-background cursor-pointer w-full h-full flex flex-col"
+      className="card hover:bg-bg-secondary cursor-pointer w-full h-full flex flex-col"
       type="button"
     >
       {repository ? (
