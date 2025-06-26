@@ -26,11 +26,7 @@ const SearchBar = (props: SearchBarProps) => {
         placeholder="Username / Organization"
       />
       <Input value={repo} onChange={setRepo} label="Repository:" placeholder="Repository" />
-      <button
-        type="button"
-        onClick={() => submit({ user, repo })}
-        className="bg-btn-default-bgColor hover:bg-btn-default-bgColor-hover rounded-lg py-2 px-4 cursor-pointer border-border border-[1px]"
-      >
+      <button type="button" onClick={() => submit({ user, repo })} className="btn">
         Search
       </button>
     </div>

@@ -27,14 +27,14 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center gap-4">
             <ThemeSwitch />
 
             <Link
               href="https://github.com/ghostbyte-dev/github-release-stats"
               rel="noopener noreferrer"
               target="_blank"
-              className="rounded-md bg-bg-secondary px-3 py-1"
+              className="btn"
             >
               View on Github
             </Link>

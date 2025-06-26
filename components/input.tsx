@@ -14,7 +14,7 @@ const Input = (props: InputProps) => {
       <input
         type="text"
         id="simple-search"
-        className="border border-border text-text text-sm rounded-lg block w-full ps-3 p-2.5 focus:ring-1 focus:ring-primary outline-none focus:border-primary"
+        className="border border-border text-text text-sm rounded-[5px] block w-full ps-3 p-2.5 focus:ring-1 focus:ring-primary outline-none focus:border-primary"
         placeholder={props.placeholder}
         required
         onChange={(e) => props.onChange(e.target.value)}

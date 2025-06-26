@@ -60,4 +60,18 @@
         height: min-content;
         line-height: 22px;
     }
+
+    .btn {
+        border-color: var(--color-border);
+        border-width: 1px;
+        border-radius: 5px;
+        background: var(--color-btn-default-bgColor);
+        padding-block: 8px;
+        padding-inline: 16px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: var(--color-btn-default-bgColor-hover);
+    }
 }
