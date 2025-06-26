@@ -56,7 +56,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 size={24}
                 className="cursor-pointer hover:text-red-400"
                 onClick={(e) => {
-                  e.stopPropagation();
+                  e.preventDefault();
                   remove();
                 }}
               />
