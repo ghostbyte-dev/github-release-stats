@@ -5,7 +5,7 @@ import ThemeSwitch from './themeSwitch';
 const Navbar = () => {
   return (
     <div className="fixed w-full z-20">
-      <div className="border-b border-gray-950 py-2 bg-background flex justify-center">
+      <div className="border-b border-border py-2 bg-bg flex justify-center">
         <div className="w-full md:w-[90%] px-4 lg:px-8 flex justify-between items-center">
           <div>
             <Link href="/" className="">
@@ -34,7 +34,7 @@ const Navbar = () => {
               href="https://github.com/ghostbyte-dev/github-release-stats"
               rel="noopener noreferrer"
               target="_blank"
-              className="rounded-md bg-secondary-background px-3 py-1"
+              className="rounded-md bg-bg-secondary px-3 py-1"
             >
               View on Github
             </Link>
