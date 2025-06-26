@@ -32,8 +32,7 @@ export default function RootLayout({
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
             <Navbar />
-            {children}
-
+            <div className="w-full pt-[81px]">{children}</div>
             <ReactQueryDevtools initialIsOpen={false} />
             <Toaster />
           </QueryClientProvider>
