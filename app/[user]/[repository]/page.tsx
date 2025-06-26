@@ -19,6 +19,7 @@ import ReleaseCard from '@/components/releaseCard';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { useEffect, useState } from 'react';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
+import Link from 'next/link';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -61,8 +62,13 @@ export default function RepositoryDetails() {
                 className="rounded-full h-12 w-12 aspect-square"
               />
               <h1 className="text-2xl font-medium">
-                {repository.owner.login} <span className="text-gray-300 font-extralight">/</span>{' '}
-                <span className="font-bold">{repository.name}</span>
+                <Link href={repository.owner.html_url} className="hover:underline">
+                  {repository.owner.login}
+                </Link>{' '}
+                <span className="text-gray-300 font-extralight">/</span>{' '}
+                <Link href={repository.html_url} className="hover:underline">
+                  <span className="font-bold">{repository.name}</span>
+                </Link>
               </h1>
             </div>
           ) : isRepositoryPending ? (
