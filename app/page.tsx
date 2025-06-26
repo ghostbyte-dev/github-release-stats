@@ -20,6 +20,10 @@ const coolRepos: RepositorySave[] = [
     name: 'Android',
   },
   {
+    user: 'WordPress',
+    name: 'gutenberg',
+  },
+  {
     user: 'ghostbyte-dev',
     name: 'pixelix',
   },
