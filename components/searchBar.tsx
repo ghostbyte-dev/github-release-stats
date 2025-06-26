@@ -18,7 +18,7 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   return (
-    <div className="flex flex-col w-full md:max-w-md gap-4">
+    <div className="flex flex-col w-full md:max-w-md gap-4 mt-10 mb-6">
       <Input
         value={user}
         onChange={setUser}
