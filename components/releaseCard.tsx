@@ -65,7 +65,9 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
 
       <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
 
-      <h3 className="text-xl font-bold">Assets:</h3>
+      <h3 className="text-xl font-bold">
+        {release.assets.length} Asset{release.assets.length !== 1 && 's'}:
+      </h3>
       {getAssets().map((asset: Asset) => (
         <div key={asset.id} className="flex flex-row gap-2 mt-5 items-center">
           <PackageIcon size={24} />
@@ -85,7 +87,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           </div>
         </div>
       ))}
-      {release.assets.length >= 5 && !isExpandedAssets ? (
+      {release.assets.length >= 5 && !isExpandedAssets && (
         <button
           className="cursor-pointer text-sm"
           type="button"
@@ -93,7 +95,9 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         >
           show all
         </button>
-      ) : (
+      )}
+
+      {release.assets.length >= 5 && isExpandedAssets && (
         <button
           className="cursor-pointer text-sm"
           type="button"
