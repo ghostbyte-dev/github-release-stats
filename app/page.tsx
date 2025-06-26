@@ -14,11 +14,12 @@ export default function Home() {
   const [repositories, setRepositories] = useLocalStorage<RepositorySave[]>('repositories', []);
   const repositoryMutation = useMutation({
     mutationFn: (search: Search) => fetchRepository(search.user, search.repo),
-    onSuccess: (data: repository) => addRepoToLocalStorage(data),
+    onSuccess: (_repo: repository, search: Search) => addRepoToLocalStorage(search),
     onError: () => onSearchError(),
   });
 
   const search = (search: Search) => {
+    console.log(`${search.user} ${search.repo}`);
     if (repositories.some((repo) => repo.name === search.repo && repo.user === search.user)) {
       toast('This Repository is already added', {
         icon: '🛈',
@@ -28,8 +29,8 @@ export default function Home() {
     repositoryMutation.mutate(search);
   };
 
-  const addRepoToLocalStorage = (repository: repository) => {
-    setRepositories([...repositories, { name: repository.name, user: repository.owner.login }]);
+  const addRepoToLocalStorage = (search: Search) => {
+    setRepositories([...repositories, { name: search.repo, user: search.user }]);
   };
 
   const onSearchError = () => {
