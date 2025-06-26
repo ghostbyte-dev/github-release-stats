@@ -26,15 +26,15 @@ const ThemeSwitch = () => {
   return (
     <button
       type="button"
-      className="relative w-10 h-[22px] rounded-full bg-switch-inactive border-border border-[1px] cursor-pointer hover:border-primary"
+      className="relative w-10 h-[22px] rounded-full bg-switch-inactive border-border border-[1px] cursor-pointer hover:border-primary duration-200"
       onClick={toggleTheme}
     >
       {theme === 'light' ? (
-        <span className="absolute left-[1px] top-[1px] w-[18px] h-[18px] rounded-full bg-white flex justify-center items-center">
+        <span className="absolute left-[1px] top-[1px] w-[18px] h-[18px] rounded-full bg-white flex justify-center items-center duration-200">
           <SunIcon size={14} />
         </span>
       ) : (
-        <span className="absolute left-[1px] top-[1px] w-[18px] h-[18px] rounded-full bg-black flex justify-center items-center trans translate-x-full">
+        <span className="absolute left-[1px] top-[1px] w-[18px] h-[18px] rounded-full bg-black flex justify-center items-center trans translate-x-full  duration-200">
           <MoonIcon size={14} />
         </span>
       )}

@@ -27,7 +27,7 @@ export default function RootLayout({
   const queryClient = new QueryClient();
 
   return (
-    <html lang="en" className="bg-bg text-text" suppressHydrationWarning>
+    <html lang="en" className="bg-bg text-text duration-200" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
