@@ -7,7 +7,13 @@ const Navbar = () => {
       <div className="w-full md:w-[90%] px-4 lg:px-8">
         <Link href="/" className="">
           <div className="flex space-x-3 items-center p-2">
-            <Image src="/logo.svg" width={48} height={48} className="h-12 w-12 rounded-lg" alt="" />
+            <Image
+              src="/logo.svg"
+              width={48}
+              height={48}
+              className="h-12 w-12 rounded-full"
+              alt=""
+            />
 
             <div>
               <span className="font-semibold text-xl">Github Release Stats</span>
