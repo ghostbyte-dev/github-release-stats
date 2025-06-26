@@ -48,164 +48,22 @@ export default function RepositoryDetails() {
   }, [releases]);
 
   return (
-    <div className="flex flex-col p-4 lg:p-8">
-      <div>
-        {repository ? (
-          <div className="flex flex-row gap-4 items-center">
-            <Image
-              src={repository.owner.avatar_url}
-              height={48}
-              width={48}
-              alt={'Avatar'}
-              className="rounded-full h-12 w-12 aspect-square"
-            />
-            <h1 className="text-2xl font-medium">
-              {repository.owner.login} <span className="text-gray-300 font-extralight">/</span>{' '}
-              <span className="font-bold">{repository.name}</span>
-            </h1>
-          </div>
-        ) : isRepositoryPending ? (
-          <>Loading...</>
-        ) : (
-          <>an error occured</>
-        )}
-      </div>
-      <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
-        <div className="flex-2/3 card p-0">
-          <div className="bg-secondary-background-dark py-2 px-2 rounded-md flex justify-between items-center">
-            <div className="border-border border-1 w-min flex rounded-md gap-1 bg-secondary-background">
-              <button
-                type="button"
-                onClick={() => setIsDownloadChart(true)}
-                className={`${isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
-              >
-                Downloads
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsDownloadChart(false)}
-                className={`${!isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
-              >
-                Stars
-              </button>
-            </div>
-            <div>
-              {!isDownloadChart ? (
-                <p>{repository?.stargazers_count} stars</p>
-              ) : (
-                <>
-                  {releases && releases.length > 0 ? (
-                    <p>
-                      {formatLargeNumber(getReleasesDownloadsCount(releases))} downloads overall
-                    </p>
-                  ) : (
-                    <></>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-          <hr className="h-[1px] border-t-0 rounded-full bg-border" />
-
-          <div className="mt-2">
-            {isDownloadChart ? (
-              <>
-                {releases && releases.length > 0 ? (
-                  <MyChart releases={releases} />
-                ) : isReleasesPending ? (
-                  <>Loading...</>
-                ) : (
-                  <>No Releases exist for this repository</>
-                )}
-              </>
-            ) : (
-              <MyStargazersChart user={user} repository={repositoryName} />
-            )}
-          </div>
-        </div>
-        <div className="flex-1/3">
+    <div className="flex justify-center">
+      <div className="flex flex-col p-4 lg:p-8 w-full md:w-[90%]">
+        <div>
           {repository ? (
-            <div className="ml-8 gap-1 flex flex-col">
-              <div className="flex flex-col gap-2">
-                <h3 className="font-bold text-xl">About</h3>
-                <p>{repository.description}</p>
-                <div className="flex flex-row gap-3 mt-1 text-sm">
-                  <LinkIcon size={16} weight="bold" />
-                  <a href={repository.homepage} className="text-link hover:underline font-bold">
-                    {repository.homepage}
-                  </a>
-                </div>
-              </div>
-              <a
-                className="flex flex-row mt-4 gap-3 hover:text-link text-secondary-text"
-                href={`${repository.html_url}#readme-ov-file`}
-              >
-                <BookOpenIcon size={18} weight="bold" />
-                <div className="flex flex-row gap-1 text-sm">
-                  <p>Readme</p>
-                </div>
-              </a>
-              {repository.license ? (
-                <a
-                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
-                  href={`${repository.html_url}#${repository.license.spdx_id}-1-ov-file`}
-                >
-                  <ScalesIcon size={18} weight="bold" />
-                  <div className="flex flex-row gap-1 text-sm">
-                    <p>{repository.license.spdx_id}</p>
-                    <p>licence</p>
-                  </div>
-                </a>
-              ) : (
-                <a
-                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
-                  href={`${repository.html_url}#security-ov-file`}
-                >
-                  <ScalesIcon size={18} weight="bold" />
-                  <div className="flex flex-row gap-1 text-sm">
-                    <p>Security policy</p>
-                  </div>
-                </a>
-              )}
-              <a
-                className="flex flex-row gap-3 hover:text-link text-secondary-text"
-                href={`${repository.html_url}/activity`}
-              >
-                <PulseIcon size={18} weight="bold" />
-                <div className="flex flex-row gap-1 text-sm">
-                  <p>Activity</p>
-                </div>
-              </a>
-              <a
-                className="flex flex-row gap-3 hover:text-link text-secondary-text"
-                href={repository.stargazers_url}
-              >
-                <StarIcon size={18} weight="bold" />
-                <div className="flex flex-row gap-1 text-sm">
-                  <p className="font-bold">{formatLargeNumber(repository.stargazers_count)}</p>
-                  <p>stars</p>
-                </div>
-              </a>
-              <a
-                className="flex flex-row gap-3 hover:text-link text-secondary-text"
-                href={repository.subscribers_url}
-              >
-                <EyeIcon size={18} weight="bold" />
-                <div className="flex flex-row gap-1 text-sm">
-                  <p className="font-bold">{formatLargeNumber(repository.subscribers_count)}</p>
-                  <p>watchers</p>
-                </div>
-              </a>
-              <a
-                className="flex flex-row gap-3 hover:text-link text-secondary-text"
-                href={repository.forks_url}
-              >
-                <GitForkIcon size={18} weight="bold" />
-                <div className="flex flex-row gap-1 text-sm">
-                  <p className="font-bold">{formatLargeNumber(repository.forks)}</p>
-                  <p>forks</p>
-                </div>
-              </a>
+            <div className="flex flex-row gap-4 items-center">
+              <Image
+                src={repository.owner.avatar_url}
+                height={48}
+                width={48}
+                alt={'Avatar'}
+                className="rounded-full h-12 w-12 aspect-square"
+              />
+              <h1 className="text-2xl font-medium">
+                {repository.owner.login} <span className="text-gray-300 font-extralight">/</span>{' '}
+                <span className="font-bold">{repository.name}</span>
+              </h1>
             </div>
           ) : isRepositoryPending ? (
             <>Loading...</>
@@ -213,21 +71,165 @@ export default function RepositoryDetails() {
             <>an error occured</>
           )}
         </div>
-      </div>
+        <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
+          <div className="flex-2/3 card p-0">
+            <div className="bg-secondary-background-dark py-2 px-2 rounded-md flex justify-between items-center">
+              <div className="border-border border-1 w-min flex rounded-md gap-1 bg-secondary-background">
+                <button
+                  type="button"
+                  onClick={() => setIsDownloadChart(true)}
+                  className={`${isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+                >
+                  Downloads
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsDownloadChart(false)}
+                  className={`${!isDownloadChart ? 'bg-background-dark border-border-bright border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+                >
+                  Stars
+                </button>
+              </div>
+              <div>
+                {!isDownloadChart ? (
+                  <p>{repository?.stargazers_count} stars</p>
+                ) : (
+                  <>
+                    {releases && releases.length > 0 ? (
+                      <p>
+                        {formatLargeNumber(getReleasesDownloadsCount(releases))} downloads overall
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+            <hr className="h-[1px] border-t-0 rounded-full bg-border" />
 
-      <div className="mt-14">
-        <h2 className="text-2xl font-bold mb-4">Releases:</h2>
-        {releases ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-            {releases.map((release: Release) => (
-              <ReleaseCard release={release} key={release.url} />
-            ))}
+            <div className="mt-2">
+              {isDownloadChart ? (
+                <>
+                  {releases && releases.length > 0 ? (
+                    <MyChart releases={releases} />
+                  ) : isReleasesPending ? (
+                    <>Loading...</>
+                  ) : (
+                    <>No Releases exist for this repository</>
+                  )}
+                </>
+              ) : (
+                <MyStargazersChart user={user} repository={repositoryName} />
+              )}
+            </div>
           </div>
-        ) : isReleasesPending ? (
-          <>Loading...</>
-        ) : (
-          <>error</>
-        )}
+          <div className="flex-1/3">
+            {repository ? (
+              <div className="ml-8 gap-1 flex flex-col">
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-bold text-xl">About</h3>
+                  <p>{repository.description}</p>
+                  <div className="flex flex-row gap-3 mt-1 text-sm">
+                    <LinkIcon size={16} weight="bold" />
+                    <a href={repository.homepage} className="text-link hover:underline font-bold">
+                      {repository.homepage}
+                    </a>
+                  </div>
+                </div>
+                <a
+                  className="flex flex-row mt-4 gap-3 hover:text-link text-secondary-text"
+                  href={`${repository.html_url}#readme-ov-file`}
+                >
+                  <BookOpenIcon size={18} weight="bold" />
+                  <div className="flex flex-row gap-1 text-sm">
+                    <p>Readme</p>
+                  </div>
+                </a>
+                {repository.license ? (
+                  <a
+                    className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                    href={`${repository.html_url}#${repository.license.spdx_id}-1-ov-file`}
+                  >
+                    <ScalesIcon size={18} weight="bold" />
+                    <div className="flex flex-row gap-1 text-sm">
+                      <p>{repository.license.spdx_id}</p>
+                      <p>licence</p>
+                    </div>
+                  </a>
+                ) : (
+                  <a
+                    className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                    href={`${repository.html_url}#security-ov-file`}
+                  >
+                    <ScalesIcon size={18} weight="bold" />
+                    <div className="flex flex-row gap-1 text-sm">
+                      <p>Security policy</p>
+                    </div>
+                  </a>
+                )}
+                <a
+                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                  href={`${repository.html_url}/activity`}
+                >
+                  <PulseIcon size={18} weight="bold" />
+                  <div className="flex flex-row gap-1 text-sm">
+                    <p>Activity</p>
+                  </div>
+                </a>
+                <a
+                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                  href={repository.stargazers_url}
+                >
+                  <StarIcon size={18} weight="bold" />
+                  <div className="flex flex-row gap-1 text-sm">
+                    <p className="font-bold">{formatLargeNumber(repository.stargazers_count)}</p>
+                    <p>stars</p>
+                  </div>
+                </a>
+                <a
+                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                  href={repository.subscribers_url}
+                >
+                  <EyeIcon size={18} weight="bold" />
+                  <div className="flex flex-row gap-1 text-sm">
+                    <p className="font-bold">{formatLargeNumber(repository.subscribers_count)}</p>
+                    <p>watchers</p>
+                  </div>
+                </a>
+                <a
+                  className="flex flex-row gap-3 hover:text-link text-secondary-text"
+                  href={repository.forks_url}
+                >
+                  <GitForkIcon size={18} weight="bold" />
+                  <div className="flex flex-row gap-1 text-sm">
+                    <p className="font-bold">{formatLargeNumber(repository.forks)}</p>
+                    <p>forks</p>
+                  </div>
+                </a>
+              </div>
+            ) : isRepositoryPending ? (
+              <>Loading...</>
+            ) : (
+              <>an error occured</>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-14">
+          <h2 className="text-2xl font-bold mb-4">Releases:</h2>
+          {releases ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+              {releases.map((release: Release) => (
+                <ReleaseCard release={release} key={release.url} />
+              ))}
+            </div>
+          ) : isReleasesPending ? (
+            <>Loading...</>
+          ) : (
+            <>error</>
+          )}
+        </div>
       </div>
     </div>
   );
