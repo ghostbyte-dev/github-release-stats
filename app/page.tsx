@@ -2,7 +2,6 @@
 
 import Card from '@/components/card';
 import SearchBar from '@/components/searchBar';
-import ThemeSwitch from '@/components/themeSwitch';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { fetchRepository } from '@/hooks/useRepository';
 import type { repository } from '@/types/repository';
@@ -10,6 +9,21 @@ import type { RepositorySave } from '@/types/repositorySave';
 import type { Search } from '@/types/search';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+
+const coolRepos: RepositorySave[] = [
+  {
+    user: 'signalapp',
+    name: 'Signal-Android',
+  },
+  {
+    user: 'duckduckgo',
+    name: 'Android',
+  },
+  {
+    user: 'ghostbyte-dev',
+    name: 'pixelix',
+  },
+];
 
 export default function Home() {
   const [repositories, setRepositories] = useLocalStorage<RepositorySave[]>('repositories', []);
@@ -54,10 +68,29 @@ export default function Home() {
           <nav className="flex justify-center">
             <SearchBar onSubmit={search} />
           </nav>
+          {repositories.length > 0 && (
+            <div className="mt-10">
+              <h2 className="font-bold text-2xl mb-6">Saved Repositories</h2>
+              {repositories && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {repositories.toReversed().map((repository: RepositorySave) => (
+                    <Card
+                      user={repository.user}
+                      repositoryName={repository.name}
+                      remove={() => removeRepository(repository.user, repository.name)}
+                      key={repository.name + repository.user}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="mt-10">
-            {repositories && (
+            <h2 className="font-bold text-2xl mb-6">Cool Repos</h2>
+            {coolRepos && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {repositories.toReversed().map((repository: RepositorySave) => (
+                {coolRepos.map((repository: RepositorySave) => (
                   <Card
                     user={repository.user}
                     repositoryName={repository.name}
