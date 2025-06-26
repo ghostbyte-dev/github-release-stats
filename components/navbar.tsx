@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ThemeSwitch from './themeSwitch';
 
 const Navbar = () => {
   return (
@@ -26,7 +27,9 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center">
+            <ThemeSwitch />
+
             <Link
               href="https://github.com/ghostbyte-dev/github-release-stats"
               rel="noopener noreferrer"

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { MoonIcon, SunIcon } from '@phosphor-icons/react';
 
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false);
@@ -14,12 +15,30 @@ const ThemeSwitch = () => {
     return null;
   }
 
+  const toggleTheme = () => {
+    if (theme === 'dark') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  };
+
   return (
-    <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-      <option value="system">System</option>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
-    </select>
+    <button
+      type="button"
+      className="relative w-10 h-[22px] rounded-full bg-switch-inactive border-border border-[1px] cursor-pointer hover:border-primary"
+      onClick={toggleTheme}
+    >
+      {theme === 'light' ? (
+        <span className="absolute left-[1px] top-[1px] w-[18px] h-[18px] rounded-full bg-white flex justify-center items-center">
+          <SunIcon size={14} />
+        </span>
+      ) : (
+        <span className="absolute left-[1px] top-[1px] w-[18px] h-[18px] rounded-full bg-black flex justify-center items-center trans translate-x-full">
+          <MoonIcon size={14} />
+        </span>
+      )}
+    </button>
   );
 };
 
