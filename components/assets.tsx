@@ -35,7 +35,7 @@ const Assets = ({ assets = [], clickable = false }: AssetsProps) => {
               <Link
                 href={asset.browser_download_url}
                 onClick={(e) => e.stopPropagation()}
-                className="font-light hover:underline"
+                className="font-semibold hover:underline"
               >
                 {asset.name}
               </Link>
