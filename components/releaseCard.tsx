@@ -18,7 +18,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         <Link
           href={release.html_url}
           onClick={(e) => e.stopPropagation()}
-          className="text-2xl font-bold hover:underline"
+          className="text-2xl font-semibold hover:underline"
         >
           {release.name}
         </Link>
@@ -43,7 +43,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         <Link
           href={release.author.html_url}
           onClick={(e) => e.stopPropagation()}
-          className="font-bold hover:underline"
+          className="font-semibold hover:underline"
         >
           {release.author.login}
         </Link>
@@ -51,7 +51,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
       </div>
       <div className="flex flex-row gap-2 mt-2">
         <DownloadIcon size={24} />
-        <span className="font-bold text-primary">
+        <span className="font-semibold text-primary">
           {formatLargeNumber(getAssetsDownloadCountSum(release))}
         </span>
         downloads

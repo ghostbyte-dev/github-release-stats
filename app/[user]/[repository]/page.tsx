@@ -76,7 +76,7 @@ export default function RepositoryDetails() {
                   rel="noopener noreferrer"
                   className="hover:underline"
                 >
-                  <span className="font-bold">{repository.name}</span>
+                  <span className="font-semibold">{repository.name}</span>
                 </Link>
               </h1>
             </div>
@@ -143,7 +143,7 @@ export default function RepositoryDetails() {
             {repository ? (
               <div className="ml-8 gap-1 flex flex-col">
                 <div className="flex flex-col gap-2">
-                  <h3 className="font-bold text-xl">About</h3>
+                  <h3 className="font-semibold text-xl">About</h3>
                   {repository.description && <p>{repository.description}</p>}
 
                   {repository.homepage && (
@@ -153,7 +153,7 @@ export default function RepositoryDetails() {
                         href={repository.homepage}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-link hover:underline font-bold"
+                        className="text-link hover:underline font-semibold"
                       >
                         {repository.homepage}
                       </Link>
@@ -216,7 +216,9 @@ export default function RepositoryDetails() {
                 >
                   <StarIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
-                    <p className="font-bold">{formatLargeNumber(repository.stargazers_count)}</p>
+                    <p className="font-semibold">
+                      {formatLargeNumber(repository.stargazers_count)}
+                    </p>
                     <p>stars</p>
                   </div>
                 </Link>
@@ -228,7 +230,9 @@ export default function RepositoryDetails() {
                 >
                   <EyeIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
-                    <p className="font-bold">{formatLargeNumber(repository.subscribers_count)}</p>
+                    <p className="font-semibold">
+                      {formatLargeNumber(repository.subscribers_count)}
+                    </p>
                     <p>watchers</p>
                   </div>
                 </Link>
@@ -240,7 +244,7 @@ export default function RepositoryDetails() {
                 >
                   <GitForkIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
-                    <p className="font-bold">{formatLargeNumber(repository.forks)}</p>
+                    <p className="font-semibold">{formatLargeNumber(repository.forks)}</p>
                     <p>forks</p>
                   </div>
                 </Link>
@@ -254,7 +258,7 @@ export default function RepositoryDetails() {
         </div>
 
         <div className="mt-14">
-          <h2 className="text-2xl font-bold mb-4">Releases:</h2>
+          <h2 className="text-2xl font-semibold mb-4">Releases:</h2>
           {releases ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
               {releases.map((release: Release) => (

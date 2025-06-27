@@ -93,7 +93,7 @@ export default function Home() {
           </nav>
           {repositories.length > 0 && (
             <div className="mt-10">
-              <h2 className="font-bold text-2xl mb-6">Saved Repositories</h2>
+              <h2 className="font-semibold text-2xl mb-6">Saved Repositories</h2>
               {repositories && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {repositories.toReversed().map((repository: RepositorySave) => (
@@ -110,7 +110,7 @@ export default function Home() {
           )}
 
           <div className="mt-10">
-            <h2 className="font-bold text-2xl mb-6">Cool Repos</h2>
+            <h2 className="font-semibold text-2xl mb-6">Cool Repos</h2>
             {coolRepos && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {coolRepos.map((repository: RepositorySave) => (

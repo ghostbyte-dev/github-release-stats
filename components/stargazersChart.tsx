@@ -39,10 +39,10 @@ const renderTooltip = (props: TooltipProps<ValueType, NameType>) => {
   if (props.active) {
     return (
       <div className="card bg-bg-secondary">
-        <p className="text-lg font-bold">{new Date(props.label).toLocaleDateString()}:</p>
+        <p className="text-lg font-semibold">{new Date(props.label).toLocaleDateString()}:</p>
 
         {props.payload?.[0] ? (
-          <p className="text-lg font-bold">
+          <p className="text-lg font-semibold">
             {formatLargeNumber(props.payload[0].value as number)} stars
           </p>
         ) : (

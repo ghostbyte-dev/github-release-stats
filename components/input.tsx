@@ -8,7 +8,7 @@ interface InputProps {
 const Input = (props: InputProps) => {
   return (
     <div className="flex flex-col w-full gap-1">
-      <label htmlFor="simple-search" className="font-bold">
+      <label htmlFor="simple-search" className="font-semibold">
         {props.label}
       </label>
       <input

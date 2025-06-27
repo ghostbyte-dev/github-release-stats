@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-    --font-sans: Noto Sans;
     --color-text: #1f2328;
     --color-secondary-text: #59636e;
     --color-link: #4493f8;
@@ -22,7 +21,6 @@
 
 @layer base {
     [data-theme='dark'] {
-        --font-sans: Noto Sans;
         --color-text: #f0f6fc;
         --color-secondary-text: #9198A1;
         --color-link: #4493f8;
@@ -39,6 +37,10 @@
         --color-switch-border-active: #656c76;
 
         --color-warning: #c59020;
+    }
+
+    * {
+        @apply font-light
     }
 }
 

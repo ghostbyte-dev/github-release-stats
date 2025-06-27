@@ -23,7 +23,7 @@ const Assets = ({ assets = [], clickable = false }: AssetsProps) => {
 
   return (
     <div>
-      <h3 className="text-xl font-bold">
+      <h3 className="text-xl font-semibold">
         {assets.length} Asset{assets.length !== 1 && 's'}
         {assets.length > 0 && ':'}
       </h3>
@@ -35,17 +35,17 @@ const Assets = ({ assets = [], clickable = false }: AssetsProps) => {
               <Link
                 href={asset.browser_download_url}
                 onClick={(e) => e.stopPropagation()}
-                className="font-bold hover:underline"
+                className="font-light hover:underline"
               >
                 {asset.name}
               </Link>
             ) : (
-              <span className="font-bold">{asset.name}</span>
+              <span className="font-semibold">{asset.name}</span>
             )}
 
             <div className="flex space-x-5">
               <span>
-                <span className="font-bold text-primary">{asset.download_count}</span> downloads
+                <span className="font-semibold text-primary">{asset.download_count}</span> downloads
               </span>
               <span>{convertBytes(asset.size)}</span>
             </div>

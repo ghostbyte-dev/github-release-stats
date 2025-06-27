@@ -42,7 +42,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 alt={'Avatar'}
                 className="rounded-full"
               />
-              <span className="text-2xl font-bold">{repository.full_name}</span>
+              <span className="text-2xl font-semibold">{repository.full_name}</span>
             </div>
             {remove && (
               <div>
@@ -60,20 +60,24 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
           <div className="flex flex-row md:gap-10 justify-around md:justify-start items-center mt-4">
             <div className="flex flex-row items-center gap-2">
               <StarIcon size={24} color="#e3b341" weight="fill" />
-              <p className="font-bold text-lg">{formatLargeNumber(repository.stargazers_count)}</p>
+              <p className="font-semibold text-lg">
+                {formatLargeNumber(repository.stargazers_count)}
+              </p>
             </div>
             <div className="flex flex-row items-center gap-2">
               <GitForkIcon size={24} color="#3D444D" />{' '}
-              <p className="font-bold text-lg">{formatLargeNumber(repository.forks)}</p>
+              <p className="font-semibold text-lg">{formatLargeNumber(repository.forks)}</p>
             </div>
             <div className="flex flex-row items-center gap-2">
               <EyeIcon size={24} color="#3D444D" />{' '}
-              <p className="font-bold text-lg">{formatLargeNumber(repository.subscribers_count)}</p>
+              <p className="font-semibold text-lg">
+                {formatLargeNumber(repository.subscribers_count)}
+              </p>
             </div>
             {releases && (releases?.length ?? [].length) > 0 && (
               <div className="flex flex-row items-center gap-2">
                 <DownloadIcon size={24} color="#3D444D" />{' '}
-                <p className="font-bold text-lg text-primary">
+                <p className="font-semibold text-lg text-primary">
                   {formatLargeNumber(getReleasesDownloadsCount(releases))}
                 </p>
               </div>
@@ -84,7 +88,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
               <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
 
               <div className="flex flex-row gap-4 items-center">
-                <span className="text-xl font-bold">{latestRelease.name}</span>
+                <span className="text-xl font-semibold">{latestRelease.name}</span>
                 <span className="badge">Latest</span>
               </div>
               <div className="flex flex-row gap-2 mt-4 mb-4">
@@ -95,7 +99,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                   alt={'Avatar'}
                   className="rounded-full"
                 />
-                <span className="font-bold">{latestRelease.author.login}</span>
+                <span className="font-semibold">{latestRelease.author.login}</span>
                 <p>released this {formatTimeAgo(latestRelease.published_at)}</p>
               </div>
 
