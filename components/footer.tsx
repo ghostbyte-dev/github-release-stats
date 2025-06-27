@@ -9,7 +9,7 @@ const Footer = () => {
           href="https://ghostbyte.dev"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:underline"
+          className="hover:underline font-semibold text-primary"
         >
           Ghostbyte
         </Link>{' '}

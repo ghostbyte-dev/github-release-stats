@@ -19,9 +19,9 @@ const Navbar = () => {
                 />
 
                 <div>
-                  <span className="font-semibold text-xl">Github Release Stats</span>
+                  <span className="font-bold text-xl">Github Release Stats</span>
 
-                  <div className="text-xs font-semibold">A Ghostbyte Production</div>
+                  <div className="text-xs font-medium">A Ghostbyte Production</div>
                 </div>
               </div>
             </Link>
