@@ -1,17 +1,9 @@
-import { convertBytes } from '@/common/bytesToSize';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { formatTimeAgo } from '@/common/formatTimeAgo';
 import useReleases from '@/hooks/useReleases';
 import { useRepository } from '@/hooks/useRepository';
-import type { Asset, Release } from '@/types/release';
-import {
-  DownloadIcon,
-  EyeIcon,
-  GitForkIcon,
-  PackageIcon,
-  StarIcon,
-  TrashIcon,
-} from '@phosphor-icons/react';
+import type { Release } from '@/types/release';
+import { DownloadIcon, EyeIcon, GitForkIcon, StarIcon, TrashIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
 import ReactionsComponent from './reactions';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
