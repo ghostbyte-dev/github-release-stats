@@ -16,6 +16,22 @@ const coolRepos: RepositorySave[] = [
     name: 'Signal-Android',
   },
   {
+    user: 'bluesky-social',
+    name: 'social-app',
+  },
+  {
+    user: 'streetcomplete',
+    name: 'StreetComplete',
+  },
+  {
+    user: 'pixelfed',
+    name: 'pixelfed-rn',
+  },
+  {
+    user: 'bitwarden',
+    name: 'server',
+  },
+  {
     user: 'duckduckgo',
     name: 'Android',
   },
