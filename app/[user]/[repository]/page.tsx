@@ -61,11 +61,21 @@ export default function RepositoryDetails() {
                 className="rounded-full h-12 w-12 aspect-square"
               />
               <h1 className="text-2xl font-medium">
-                <Link href={repository.owner.html_url} className="hover:underline">
+                <Link
+                  href={repository.owner.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
                   {repository.owner.login}
                 </Link>{' '}
                 <span className="text-gray-300 font-extralight">/</span>{' '}
-                <Link href={repository.html_url} className="hover:underline">
+                <Link
+                  href={repository.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
                   <span className="font-bold">{repository.name}</span>
                 </Link>
               </h1>
@@ -134,84 +144,106 @@ export default function RepositoryDetails() {
               <div className="ml-8 gap-1 flex flex-col">
                 <div className="flex flex-col gap-2">
                   <h3 className="font-bold text-xl">About</h3>
-                  <p>{repository.description}</p>
-                  <div className="flex flex-row gap-3 mt-1 text-sm">
-                    <LinkIcon size={16} weight="bold" />
-                    <a href={repository.homepage} className="text-link hover:underline font-bold">
-                      {repository.homepage}
-                    </a>
-                  </div>
+                  {repository.description && <p>{repository.description}</p>}
+
+                  {repository.homepage && (
+                    <div className="flex flex-row gap-3 mt-1 text-sm">
+                      <LinkIcon size={16} weight="bold" />
+                      <Link
+                        href={repository.homepage}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-link hover:underline font-bold"
+                      >
+                        {repository.homepage}
+                      </Link>
+                    </div>
+                  )}
                 </div>
-                <a
+                <Link
                   className="flex flex-row mt-4 gap-3 hover:text-link text-secondary-text"
                   href={`${repository.html_url}#readme-ov-file`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <BookOpenIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
                     <p>Readme</p>
                   </div>
-                </a>
+                </Link>
                 {repository.license ? (
-                  <a
+                  <Link
                     className="flex flex-row gap-3 hover:text-link text-secondary-text"
                     href={`${repository.html_url}#${repository.license.spdx_id}-1-ov-file`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <ScalesIcon size={18} weight="bold" />
                     <div className="flex flex-row gap-1 text-sm">
                       <p>{repository.license.spdx_id}</p>
                       <p>licence</p>
                     </div>
-                  </a>
+                  </Link>
                 ) : (
-                  <a
+                  <Link
                     className="flex flex-row gap-3 hover:text-link text-secondary-text"
                     href={`${repository.html_url}#security-ov-file`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <ScalesIcon size={18} weight="bold" />
                     <div className="flex flex-row gap-1 text-sm">
                       <p>Security policy</p>
                     </div>
-                  </a>
+                  </Link>
                 )}
-                <a
+                <Link
                   className="flex flex-row gap-3 hover:text-link text-secondary-text"
                   href={`${repository.html_url}/activity`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <PulseIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
                     <p>Activity</p>
                   </div>
-                </a>
-                <a
+                </Link>
+                <Link
                   className="flex flex-row gap-3 hover:text-link text-secondary-text"
                   href={repository.stargazers_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <StarIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
                     <p className="font-bold">{formatLargeNumber(repository.stargazers_count)}</p>
                     <p>stars</p>
                   </div>
-                </a>
-                <a
+                </Link>
+                <Link
                   className="flex flex-row gap-3 hover:text-link text-secondary-text"
                   href={repository.subscribers_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <EyeIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
                     <p className="font-bold">{formatLargeNumber(repository.subscribers_count)}</p>
                     <p>watchers</p>
                   </div>
-                </a>
-                <a
+                </Link>
+                <Link
                   className="flex flex-row gap-3 hover:text-link text-secondary-text"
                   href={repository.forks_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <GitForkIcon size={18} weight="bold" />
                   <div className="flex flex-row gap-1 text-sm">
                     <p className="font-bold">{formatLargeNumber(repository.forks)}</p>
                     <p>forks</p>
                   </div>
-                </a>
+                </Link>
               </div>
             ) : isRepositoryPending ? (
               <>Loading...</>

@@ -23,7 +23,6 @@ export async function GET(request: Request) {
         requestPages[0] = 1;
       }
     }
-    console.log(requestPages);
 
     const resArray = await Promise.all(
       requestPages.map((page) => {
