@@ -16,6 +16,7 @@ import Image from 'next/image';
 import ReactionsComponent from './reactions';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 import Link from 'next/link';
+import Assets from './assets';
 
 interface CardProps {
   user: string;
@@ -96,7 +97,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 <span className="text-xl font-bold">{latestRelease.name}</span>
                 <span className="badge">Latest</span>
               </div>
-              <div className="flex flex-row gap-2 mt-4">
+              <div className="flex flex-row gap-2 mt-4 mb-4">
                 <Image
                   src={latestRelease.author.avatar_url}
                   height={24}
@@ -107,14 +108,9 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 <span className="font-bold">{latestRelease.author.login}</span>
                 <p>released this {formatTimeAgo(latestRelease.published_at)}</p>
               </div>
-              {latestRelease.assets.slice(0, 5).map((asset: Asset) => (
-                <div key={asset.id} className="flex flex-row gap-2 mt-4 items-center">
-                  <PackageIcon />
-                  <span className="font-bold">{asset.name}</span>
-                  <p className="ml-4">&#9900; {asset.download_count} downloads</p>
-                  <p className="ml-4">&#9900; {convertBytes(asset.size)}</p>
-                </div>
-              ))}
+
+              <Assets assets={latestRelease.assets} />
+
               {latestRelease.reactions ? (
                 <div className="mt-4">
                   <ReactionsComponent reactions={latestRelease.reactions} />{' '}
