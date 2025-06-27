@@ -20,7 +20,7 @@ import Link from 'next/link';
 interface CardProps {
   user: string;
   repositoryName: string;
-  remove: () => void;
+  remove?: () => void;
 }
 
 const Card = ({ user, repositoryName, remove }: CardProps) => {
@@ -51,16 +51,18 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
               />
               <span className="text-2xl font-bold">{repository.full_name}</span>
             </div>
-            <div>
-              <TrashIcon
-                size={24}
-                className="cursor-pointer hover:text-red-400"
-                onClick={(e) => {
-                  e.preventDefault();
-                  remove();
-                }}
-              />
-            </div>
+            {remove && (
+              <div>
+                <TrashIcon
+                  size={24}
+                  className="cursor-pointer hover:text-red-400"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    remove();
+                  }}
+                />
+              </div>
+            )}
           </div>
           <div className="flex flex-row gap-10 items-center mt-4">
             <div className="flex flex-row gap-2">
@@ -130,14 +132,16 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
       ) : (
         <div className="flex flex-row justify-between">
           <p>an unexpected error occured</p>
-          <TrashIcon
-            size={24}
-            className="cursor-pointer hover:text-red-400"
-            onClick={(e) => {
-              e.stopPropagation();
-              remove();
-            }}
-          />
+          {remove && (
+            <TrashIcon
+              size={24}
+              className="cursor-pointer hover:text-red-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                remove();
+              }}
+            />
+          )}
         </div>
       )}
     </Link>

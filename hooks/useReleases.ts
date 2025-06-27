@@ -19,7 +19,6 @@ export default function useReleases(
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    console.log('response ok');
     const releases: Release[] = await response.json();
 
     let latestAlreadyUsed = false;

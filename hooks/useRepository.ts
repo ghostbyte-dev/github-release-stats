@@ -22,6 +22,5 @@ export const fetchRepository = async (user: string, repository: string): Promise
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
-  console.log('response ok');
   return response.json();
 };

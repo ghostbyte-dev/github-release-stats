@@ -1,6 +1,5 @@
 import { formatLargeNumber } from '@/common/formatLargeNumber';
 import useStargazersHistory from '@/hooks/useStargazersHistory';
-import type { Asset, Release } from '@/types/release';
 import {
   Line,
   LineChart,
@@ -19,7 +18,6 @@ type StargazersChartProps = {
 
 const StargazersChart = ({ user, repository }: StargazersChartProps) => {
   const [test] = useStargazersHistory(user, repository);
-  console.log(test);
   return (
     <ResponsiveContainer width="95%" height={400}>
       <LineChart id="test" data={test}>

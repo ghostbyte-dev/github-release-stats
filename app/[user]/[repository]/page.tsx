@@ -42,7 +42,6 @@ export default function RepositoryDetails() {
   }, [user, repositoryName]);
 
   useEffect(() => {
-    console.log(releases?.length);
     if (releases && releases.length === 0) {
       setIsDownloadChart(false);
     }

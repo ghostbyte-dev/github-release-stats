@@ -54,7 +54,6 @@ export default function Home() {
   });
 
   const search = (search: Search) => {
-    console.log(`${search.user} ${search.repo}`);
     if (repositories.some((repo) => repo.name === search.repo && repo.user === search.user)) {
       toast('This Repository is already added', {
         icon: '🛈',
@@ -114,7 +113,6 @@ export default function Home() {
                   <Card
                     user={repository.user}
                     repositoryName={repository.name}
-                    remove={() => removeRepository(repository.user, repository.name)}
                     key={repository.name + repository.user}
                   />
                 ))}

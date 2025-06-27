@@ -1,11 +1,8 @@
 export async function GET(request: Request) {
-  // For example, fetch data from your DB here
   try {
     const { user, repo } = Object.fromEntries(new URL(request.url).searchParams);
-    console.log(user);
-    console.log(repo);
+
     const token = process.env.GITHUB_API_KEY ?? '';
-    console.log(token);
     const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
       headers: {
         Authorization: `bearer ${token}`,
@@ -25,8 +22,7 @@ export async function GET(request: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (e) {
-    console.log(e);
+  } catch {
     throw Error('an unexpected error occured');
   }
 }
