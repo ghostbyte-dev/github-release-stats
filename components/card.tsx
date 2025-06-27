@@ -65,28 +65,26 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
               </div>
             )}
           </div>
-          <div className="flex flex-row gap-10 items-center mt-4">
-            <div className="flex flex-row gap-2">
+          <div className="flex flex-row md:gap-10 justify-around md:justify-start items-center mt-4">
+            <div className="flex flex-row items-center gap-2">
               <StarIcon size={24} color="#e3b341" weight="fill" />
               <p className="font-bold text-lg">{formatLargeNumber(repository.stargazers_count)}</p>
             </div>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row items-center gap-2">
               <GitForkIcon size={24} color="#3D444D" />{' '}
               <p className="font-bold text-lg">{formatLargeNumber(repository.forks)}</p>
             </div>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row items-center gap-2">
               <EyeIcon size={24} color="#3D444D" />{' '}
               <p className="font-bold text-lg">{formatLargeNumber(repository.subscribers_count)}</p>
             </div>
-            {releases && (releases?.length ?? [].length) > 0 ? (
-              <div className="flex flex-row gap-2">
+            {releases && (releases?.length ?? [].length) > 0 && (
+              <div className="flex flex-row items-center gap-2">
                 <DownloadIcon size={24} color="#3D444D" />{' '}
                 <p className="font-bold text-lg">
                   {formatLargeNumber(getReleasesDownloadsCount(releases))}
                 </p>
               </div>
-            ) : (
-              <></>
             )}
           </div>
           {latestRelease !== undefined ? (
