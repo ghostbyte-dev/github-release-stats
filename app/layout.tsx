@@ -8,6 +8,7 @@ import Navbar from '@/components/navbar';
 import type React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from 'next-themes';
+import Footer from '@/components/footer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -33,6 +34,7 @@ export default function RootLayout({
           <QueryClientProvider client={queryClient}>
             <Navbar />
             <div className="w-full pt-[81px]">{children}</div>
+            <Footer />
             <ReactQueryDevtools initialIsOpen={false} />
             <Toaster />
           </QueryClientProvider>
