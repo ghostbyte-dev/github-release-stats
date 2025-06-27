@@ -20,12 +20,20 @@ const coolRepos: RepositorySave[] = [
     name: 'social-app',
   },
   {
+    user: 'mastodon',
+    name: 'mastodon-android',
+  },
+  {
     user: 'streetcomplete',
     name: 'StreetComplete',
   },
   {
     user: 'pixelfed',
     name: 'pixelfed-rn',
+  },
+  {
+    user: 'ghostbyte-dev',
+    name: 'pixelix',
   },
   {
     user: 'bitwarden',
@@ -36,12 +44,8 @@ const coolRepos: RepositorySave[] = [
     name: 'Android',
   },
   {
-    user: 'WordPress',
-    name: 'gutenberg',
-  },
-  {
-    user: 'ghostbyte-dev',
-    name: 'pixelix',
+    user: 'JetBrains',
+    name: 'kotlin',
   },
 ];
 

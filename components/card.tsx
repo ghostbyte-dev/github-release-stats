@@ -81,7 +81,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
             {releases && (releases?.length ?? [].length) > 0 && (
               <div className="flex flex-row items-center gap-2">
                 <DownloadIcon size={24} color="#3D444D" />{' '}
-                <p className="font-bold text-lg">
+                <p className="font-bold text-lg text-primary">
                   {formatLargeNumber(getReleasesDownloadsCount(releases))}
                 </p>
               </div>
