@@ -1,6 +1,7 @@
 'use client';
 
 import Card from '@/components/card';
+import Hero from '@/components/hero';
 import SearchBar from '@/components/searchBar';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { fetchRepository } from '@/hooks/useRepository';
@@ -88,9 +89,12 @@ export default function Home() {
       <title>Github Release Stats</title>
       <div className="flex justify-center">
         <div className="p-4 lg:p-8  w-full md:w-[90%]">
-          <nav className="flex justify-center">
+          <Hero />
+
+          <div className="flex justify-center">
             <SearchBar onSubmit={search} />
-          </nav>
+          </div>
+
           {repositories.length > 0 && (
             <div className="mt-10">
               <h2 className="font-semibold text-2xl mb-6">Saved Repositories</h2>
