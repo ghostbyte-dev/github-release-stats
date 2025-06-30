@@ -20,6 +20,7 @@ import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { useEffect, useState } from 'react';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 import Link from 'next/link';
+import LoadingIndicator from '@/components/loadingIndicator';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -81,7 +82,7 @@ export default function RepositoryDetails() {
               </h1>
             </div>
           ) : isRepositoryPending ? (
-            <>Loading...</>
+            <LoadingIndicator />
           ) : (
             <>an error occured</>
           )}
@@ -129,7 +130,7 @@ export default function RepositoryDetails() {
                   {releases && releases.length > 0 ? (
                     <MyChart releases={releases} />
                   ) : isReleasesPending ? (
-                    <>Loading...</>
+                    <LoadingIndicator />
                   ) : (
                     <>No Releases exist for this repository</>
                   )}
@@ -250,7 +251,7 @@ export default function RepositoryDetails() {
                 </Link>
               </div>
             ) : isRepositoryPending ? (
-              <>Loading...</>
+              <LoadingIndicator />
             ) : (
               <>an error occured</>
             )}
@@ -266,7 +267,7 @@ export default function RepositoryDetails() {
               ))}
             </div>
           ) : isReleasesPending ? (
-            <>Loading...</>
+            <LoadingIndicator />
           ) : (
             <>error</>
           )}

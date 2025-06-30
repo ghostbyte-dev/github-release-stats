@@ -9,6 +9,7 @@ import ReactionsComponent from './reactions';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 import Link from 'next/link';
 import Assets from './assets';
+import LoadingIndicator from './loadingIndicator';
 
 interface CardProps {
   user: string;
@@ -118,7 +119,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
           )}
         </>
       ) : isRepositoryPending ? (
-        <p>loading...</p>
+        <LoadingIndicator />
       ) : (
         <div className="flex flex-row justify-between">
           <p>an unexpected error occured</p>
