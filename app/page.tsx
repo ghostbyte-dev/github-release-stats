@@ -50,15 +50,15 @@ const coolRepos: RepositorySave[] = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
   const queryClient = new QueryClient();
 
-  coolRepos.map((coolRepo: RepositorySave) => {
-    queryClient.prefetchQuery({
+  await coolRepos.map(async (coolRepo: RepositorySave) => {
+    await queryClient.prefetchQuery({
       queryKey: ['releases', coolRepo.user, coolRepo.name],
       queryFn: () => fetchReleases(coolRepo.user, coolRepo.name),
     });
-    queryClient.prefetchQuery({
+    await queryClient.prefetchQuery({
       queryKey: ['repository', coolRepo.user, coolRepo.name],
       queryFn: () => fetchRepository(coolRepo.user, coolRepo.name),
     });
