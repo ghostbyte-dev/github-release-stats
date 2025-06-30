@@ -89,12 +89,13 @@ export default function Home() {
       <title>Github Release Stats</title>
       <div className="flex justify-center">
         <div className="p-4 lg:p-8  w-full md:w-[90%]">
-          <Hero />
+          <div className="flex flex-row w-full justify-around">
+            <Hero />
 
-          <div className="flex justify-center">
-            <SearchBar onSubmit={search} />
+            <div className="flex justify-center min-w-1/3">
+              <SearchBar onSubmit={search} />
+            </div>
           </div>
-
           {repositories.length > 0 && (
             <div className="mt-10">
               <h2 className="font-semibold text-2xl mb-6">Saved Repositories</h2>
