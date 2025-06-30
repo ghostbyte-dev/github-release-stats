@@ -1,3 +1,4 @@
+'use client';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { formatTimeAgo } from '@/common/formatTimeAgo';
 import useReleases from '@/hooks/useReleases';

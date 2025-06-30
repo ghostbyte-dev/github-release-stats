@@ -14,26 +14,26 @@ export default function useReleases(
     queryKey: ['releases', user, repository],
   });
 
-  const fetchReleases = async (user: string, repository: string): Promise<Release[]> => {
-    const response = await fetch(`/api/releases?user=${user}&repo=${repository}`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const releases: Release[] = await response.json();
-
-    let latestAlreadyUsed = false;
-    const modifiedReleases = releases.map((release: Release) => {
-      if (release.draft || release.prerelease) {
-        release.latest = false;
-        return release;
-      }
-      release.latest = !latestAlreadyUsed;
-      latestAlreadyUsed = true;
-      return release;
-    });
-
-    return modifiedReleases;
-  };
-
   return [releases, isReleasesPending, isReleasesError];
 }
+
+export const fetchReleases = async (user: string, repository: string): Promise<Release[]> => {
+  const response = await fetch(`/api/releases?user=${user}&repo=${repository}`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const releases: Release[] = await response.json();
+
+  let latestAlreadyUsed = false;
+  const modifiedReleases = releases.map((release: Release) => {
+    if (release.draft || release.prerelease) {
+      release.latest = false;
+      return release;
+    }
+    release.latest = !latestAlreadyUsed;
+    latestAlreadyUsed = true;
+    return release;
+  });
+
+  return modifiedReleases;
+};
