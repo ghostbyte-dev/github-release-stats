@@ -8,7 +8,7 @@ import { fetchRepository } from '@/hooks/useRepository';
 import type { repository } from '@/types/repository';
 import type { RepositorySave } from '@/types/repositorySave';
 import type { Search } from '@/types/search';
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary, QueryClient, useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 const coolRepos: RepositorySave[] = [
@@ -81,11 +81,12 @@ export default function Home() {
             {coolRepos && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {coolRepos.map((repository: RepositorySave) => (
-                  <Card
-                    user={repository.user}
-                    repositoryName={repository.name}
+                  <HydrationBoundary
+                    state={dehydrate(queryClient)}
                     key={repository.name + repository.user}
-                  />
+                  >
+                    <Card user={repository.user} repositoryName={repository.name} />
+                  </HydrationBoundary>
                 ))}
               </div>
             )}
