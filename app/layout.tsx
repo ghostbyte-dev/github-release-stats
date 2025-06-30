@@ -22,7 +22,7 @@ export default function RootLayout({
   const queryClient = new QueryClient();
 
   return (
-    <html lang="en" className="bg-bg text-text duration-200" suppressHydrationWarning>
+    <html lang="en" className="bg-bg text-text duration-200 break-words" suppressHydrationWarning>
       <body className={`${font.className} antialiased`}>
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>

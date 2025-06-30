@@ -89,9 +89,8 @@ export default function Home() {
       <title>Github Release Stats</title>
       <div className="flex justify-center">
         <div className="p-4 lg:p-8  w-full md:w-[90%]">
-          <div className="flex flex-row w-full justify-around">
+          <div className="flex flex-row w-full justify-around items-center">
             <Hero />
-
             <div className="flex justify-center min-w-1/3">
               <SearchBar onSubmit={search} />
             </div>
