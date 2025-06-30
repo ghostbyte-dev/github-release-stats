@@ -89,7 +89,12 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
               <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
 
               <div className="flex flex-row gap-4 items-center">
-                <span className="text-xl font-semibold">{latestRelease.name}</span>
+                <span className="text-xl font-semibold">
+                  {' '}
+                  {latestRelease.name === '' || !latestRelease.name
+                    ? latestRelease.tag_name
+                    : latestRelease.name}
+                </span>
                 <span className="badge">Latest</span>
               </div>
               <div className="flex flex-row gap-2 mt-4 mb-4">

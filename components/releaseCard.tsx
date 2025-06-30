@@ -20,7 +20,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           onClick={(e) => e.stopPropagation()}
           className="text-2xl font-semibold hover:underline"
         >
-          {release.name}
+          {release.name === '' || !release.name ? release.tag_name : release.name}
         </Link>
         {release.latest ? (
           <span className="badge">Latest</span>

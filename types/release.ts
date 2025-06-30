@@ -2,7 +2,7 @@ export type Release = {
   url: string;
   html_url: string;
   tag_name: string;
-  name: 'string';
+  name: string;
   draft: boolean;
   prerelease: boolean;
   created_at: Date;
