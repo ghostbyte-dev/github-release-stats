@@ -23,6 +23,7 @@ import Link from 'next/link';
 import LoadingIndicator from '@/components/loadingIndicator';
 import useReleasesInfinite from '@/hooks/useReleasesInfinite';
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -34,11 +35,23 @@ export default function RepositoryDetails() {
   const params = useParams();
   const user = params.user as string;
   const repositoryName = params.repository as string;
-
+  const { ref, inView } = useInView();
   const [isDownloadChart, setIsDownloadChart] = useState<boolean>(true);
-  const {data: releases, isPending: isReleasesPending, hasNextPage, fetchNextPage, isFetchingNextPage, isFetching} = useReleasesInfinite(user, repositoryName);
+  const {
+    data: releases,
+    isPending: isReleasesPending,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useReleasesInfinite(user, repositoryName);
 
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage]);
 
   useEffect(() => {
     document.title = `${user}/${repositoryName} - Github Release Stats`;
@@ -51,13 +64,13 @@ export default function RepositoryDetails() {
   }, [releases]);
 
   const pagesToReleaseArray = () => {
-        const releaseArrayEmpty: Release[] = [];
-        const pages = releases?.pages
-        if (pages) {
-          return releaseArrayEmpty.concat(...pages)
-        }
-        return [];
-  }
+    const releaseArrayEmpty: Release[] = [];
+    const pages = releases?.pages;
+    if (pages) {
+      return releaseArrayEmpty.concat(...pages);
+    }
+    return [];
+  };
 
   return (
     <div className="flex justify-center">
@@ -124,7 +137,8 @@ export default function RepositoryDetails() {
                   <>
                     {releases && releases.pages[0].length > 0 ? (
                       <p>
-                        {formatLargeNumber(getReleasesDownloadsCount(pagesToReleaseArray()))} downloads overall
+                        {formatLargeNumber(getReleasesDownloadsCount(pagesToReleaseArray()))}{' '}
+                        downloads overall
                       </p>
                     ) : (
                       <></>
@@ -274,23 +288,28 @@ export default function RepositoryDetails() {
           {releases ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
               {releases.pages.map((page: Release[], i: number) => (
-                        <React.Fragment key={i}>
-                          {page.map((release: Release) => 
-                           { 
-                            let latestAlreadyUsed = false;
-                            let latest = false;
-                            releases.pages.map((page: Release[]) => {
-                              page.map((releaseComparison: Release) => {
-                                if (releaseComparison.draft || releaseComparison.prerelease || latestAlreadyUsed) return;
-                                if (releaseComparison.id === release.id) {
-                                  latest = true;
-                                }
-                                latestAlreadyUsed = true;
-                              })
-                           }) 
-                            return <ReleaseCard release={release} key={release.url} latest={latest}/>
-                          })}
-                        </React.Fragment>
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                <React.Fragment key={i}>
+                  {page.map((release: Release) => {
+                    let latestAlreadyUsed = false;
+                    let latest = false;
+                    releases.pages.map((page: Release[]) => {
+                      page.map((releaseComparison: Release) => {
+                        if (
+                          releaseComparison.draft ||
+                          releaseComparison.prerelease ||
+                          latestAlreadyUsed
+                        )
+                          return;
+                        if (releaseComparison.id === release.id) {
+                          latest = true;
+                        }
+                        latestAlreadyUsed = true;
+                      });
+                    });
+                    return <ReleaseCard release={release} key={release.url} latest={latest} />;
+                  })}
+                </React.Fragment>
               ))}
             </div>
           ) : isReleasesPending ? (
@@ -299,17 +318,14 @@ export default function RepositoryDetails() {
             <>error</>
           )}
           <div>
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetching}
-        >
-          {isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-              ? 'Load More'
-              : 'Nothing more to load'}
-        </button>
-      </div>
+            {isFetchingNextPage && hasNextPage ? (
+              <p className="text-center">Loading more posts...</p>
+            ) : (
+              <p className="text-center">No more posts found</p>
+            )}
+
+            <div ref={ref} />
+          </div>
         </div>
       </div>
     </div>

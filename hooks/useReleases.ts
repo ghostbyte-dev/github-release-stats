@@ -17,12 +17,27 @@ export default function useReleases(
   return [releases, isReleasesPending, isReleasesError];
 }
 
-export const fetchReleases = async (user: string, repository: string, page: number = 0): Promise<Release[]> => {
+export const fetchReleases = async (
+  user: string,
+  repository: string,
+  page = 0,
+): Promise<Release[]> => {
   const response = await fetch(`/api/releases?user=${user}&repo=${repository}&page=${page}`);
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
   const releases: Release[] = await response.json();
 
-  return releases;
+  let latestAlreadyUsed = false;
+  const modifiedReleases = releases.map((release: Release) => {
+    if (release.draft || release.prerelease) {
+      release.latest = false;
+      return release;
+    }
+    release.latest = !latestAlreadyUsed;
+    latestAlreadyUsed = true;
+    return release;
+  });
+
+  return modifiedReleases;
 };
