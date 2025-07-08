@@ -42,6 +42,10 @@
     * {
         @apply font-light
     }
+
+    ::selection {
+        @apply bg-primary text-bg
+    }
 }
 
 @layer components {
@@ -70,10 +74,22 @@
         background: var(--color-btn-default-bgColor);
         padding-block: 8px;
         padding-inline: 16px;
-        cursor: pointer;
+    }
+
+    .btn:enabled {
+        cursor: pointer
     }
 
     .btn:hover {
         background: var(--color-btn-default-bgColor-hover);
+    }
+
+    .btn:disabled {
+        border-color: var(--color-border);
+        border-width: 1px;
+        border-radius: 5px;
+        background: var(--color-btn-default-bgColor);
+        padding-block: 8px;
+        padding-inline: 16px;
     }
 }

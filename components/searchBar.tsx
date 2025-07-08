@@ -7,6 +7,8 @@ import type { repository } from '@/types/repository';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useLocalStorageContext } from '@/context/LocalStorageContext';
+import { CircleNotchIcon, SpinnerBallIcon } from '@phosphor-icons/react';
+import LoadingIndicator from './loadingIndicator';
 
 const SearchBar = () => {
   const [user, setUser] = useState<string>('');
@@ -44,7 +46,10 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col w-full md:max-w-md gap-4 mt-10 mb-6">
+    <form
+      className="flex flex-col w-full md:max-w-md gap-4 mt-10 mb-6"
+      action={() => submit({ user, repo })}
+    >
       <Input
         value={user}
         onChange={setUser}
@@ -52,10 +57,23 @@ const SearchBar = () => {
         placeholder="Username / Organization"
       />
       <Input value={repo} onChange={setRepo} label="Repository:" placeholder="Repository" />
-      <button type="button" onClick={() => submit({ user, repo })} className="btn">
-        Search
-      </button>
-    </div>
+      {!repositoryMutation.isPending && (
+        <button
+          type="button"
+          onClick={() => submit({ user, repo })}
+          className="btn"
+          disabled={!user || !repo}
+        >
+          Search
+        </button>
+      )}
+
+      {repositoryMutation.isPending && (
+        <button type="submit" className="btn flex items-center justify-center" disabled>
+          <LoadingIndicator />
+        </button>
+      )}
+    </form>
   );
 };
 
