@@ -21,6 +21,8 @@ import { useEffect, useState } from 'react';
 import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 import Link from 'next/link';
 import LoadingIndicator from '@/components/loadingIndicator';
+import useReleasesInfinite from '@/hooks/useReleasesInfinite';
+import React from 'react';
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -34,7 +36,7 @@ export default function RepositoryDetails() {
   const repositoryName = params.repository as string;
 
   const [isDownloadChart, setIsDownloadChart] = useState<boolean>(true);
-  const [releases, isReleasesPending] = useReleases(user, repositoryName);
+  const {data: releases, isPending: isReleasesPending, hasNextPage, fetchNextPage, isFetchingNextPage, isFetching} = useReleasesInfinite(user, repositoryName);
 
   const [repository, isRepositoryPending] = useRepository(user, repositoryName);
 
@@ -43,10 +45,19 @@ export default function RepositoryDetails() {
   }, [user, repositoryName]);
 
   useEffect(() => {
-    if (releases && releases.length === 0) {
+    if (releases && releases.pages[0].length === 0) {
       setIsDownloadChart(false);
     }
   }, [releases]);
+
+  const pagesToReleaseArray = () => {
+        const releaseArrayEmpty: Release[] = [];
+        const pages = releases?.pages
+        if (pages) {
+          return releaseArrayEmpty.concat(...pages)
+        }
+        return [];
+  }
 
   return (
     <div className="flex justify-center">
@@ -111,9 +122,9 @@ export default function RepositoryDetails() {
                   <p>{repository?.stargazers_count} stars</p>
                 ) : (
                   <>
-                    {releases && releases.length > 0 ? (
+                    {releases && releases.pages[0].length > 0 ? (
                       <p>
-                        {formatLargeNumber(getReleasesDownloadsCount(releases))} downloads overall
+                        {formatLargeNumber(getReleasesDownloadsCount(pagesToReleaseArray()))} downloads overall
                       </p>
                     ) : (
                       <></>
@@ -127,8 +138,8 @@ export default function RepositoryDetails() {
             <div className="mt-2">
               {isDownloadChart ? (
                 <>
-                  {releases && releases.length > 0 ? (
-                    <MyChart releases={releases} />
+                  {releases && releases.pages[0].length > 0 ? (
+                    <MyChart releases={pagesToReleaseArray()} />
                   ) : isReleasesPending ? (
                     <LoadingIndicator />
                   ) : (
@@ -262,8 +273,24 @@ export default function RepositoryDetails() {
           <h2 className="text-2xl font-semibold mb-4">Releases:</h2>
           {releases ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-              {releases.map((release: Release) => (
-                <ReleaseCard release={release} key={release.url} />
+              {releases.pages.map((page: Release[], i: number) => (
+                        <React.Fragment key={i}>
+                          {page.map((release: Release) => 
+                           { 
+                            let latestAlreadyUsed = false;
+                            let latest = false;
+                            releases.pages.map((page: Release[]) => {
+                              page.map((releaseComparison: Release) => {
+                                if (releaseComparison.draft || releaseComparison.prerelease || latestAlreadyUsed) return;
+                                if (releaseComparison.id === release.id) {
+                                  latest = true;
+                                }
+                                latestAlreadyUsed = true;
+                              })
+                           }) 
+                            return <ReleaseCard release={release} key={release.url} latest={latest}/>
+                          })}
+                        </React.Fragment>
               ))}
             </div>
           ) : isReleasesPending ? (
@@ -271,6 +298,18 @@ export default function RepositoryDetails() {
           ) : (
             <>error</>
           )}
+          <div>
+        <button
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetching}
+        >
+          {isFetchingNextPage
+            ? 'Loading more...'
+            : hasNextPage
+              ? 'Load More'
+              : 'Nothing more to load'}
+        </button>
+      </div>
         </div>
       </div>
     </div>

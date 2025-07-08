@@ -22,7 +22,10 @@ const ReleasesChart = ({ releases }: ReleasesChartProps) => {
       assetDownloads.length > 0
         ? assetDownloads.reduce((sum: number, current: number) => sum + current)
         : 0;
-    return { release: release.name, downloads: downloadSum };
+    return {
+      release: release.name !== '' ? release.name : release.tag_name,
+      downloads: downloadSum,
+    };
   });
 
   return (

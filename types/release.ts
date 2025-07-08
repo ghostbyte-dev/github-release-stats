@@ -1,4 +1,5 @@
 export type Release = {
+  id: number
   url: string;
   html_url: string;
   tag_name: string;
@@ -10,7 +11,6 @@ export type Release = {
   assets: Asset[];
   author: User;
   body: string;
-  latest: boolean;
   reactions: Reactions;
 };
 

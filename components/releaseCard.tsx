@@ -9,9 +9,10 @@ import Assets from './assets';
 import Link from 'next/link';
 type ReleaseCardProps = {
   release: Release;
+  latest: boolean;
 };
 
-const ReleaseCard = ({ release }: ReleaseCardProps) => {
+const ReleaseCard = ({ release, latest }: ReleaseCardProps) => {
   return (
     <div className="card w-full">
       <div className="flex flex-row gap-4 items-center">
@@ -22,7 +23,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         >
           {release.name === '' || !release.name ? release.tag_name : release.name}
         </Link>
-        {release.latest ? (
+        {latest ? (
           <span className="badge">Latest</span>
         ) : release.draft ? (
           <span className="badge border-warning text-warning">Draft</span>
