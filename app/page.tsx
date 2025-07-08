@@ -2,19 +2,19 @@ import Card from '@/components/card';
 import Hero from '@/components/hero';
 import LocalRepositories from '@/components/localRepositories';
 import SearchBar from '@/components/searchBar';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import { fetchReleases } from '@/hooks/useReleases';
 import { fetchRepository } from '@/hooks/useRepository';
-import type { repository } from '@/types/repository';
 import type { RepositorySave } from '@/types/repositorySave';
-import type { Search } from '@/types/search';
-import { dehydrate, HydrationBoundary, QueryClient, useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 const coolRepos: RepositorySave[] = [
   {
     user: 'signalapp',
     name: 'Signal-Android',
+  },
+  {
+    user: 'microsoft',
+    name: 'edit',
   },
   {
     user: 'bluesky-social',
