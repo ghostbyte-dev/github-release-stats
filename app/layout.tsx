@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-bg text-text duration-200 break-words" suppressHydrationWarning>
+    <html lang="en" className="bg-bg text-text duration-200 break-all" suppressHydrationWarning>
       <body className={`${font.className} antialiased`}>
         <Providers>
           <Navbar />

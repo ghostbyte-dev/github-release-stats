@@ -44,7 +44,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 alt={'Avatar'}
                 className="rounded-full"
               />
-              <span className="text-2xl font-semibold">{repository.full_name}</span>
+              <span className="text-xl md:text-2xl font-semibold">{repository.full_name}</span>
             </div>
             {remove && (
               <div>
@@ -104,7 +104,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                   height={24}
                   width={24}
                   alt={'Avatar'}
-                  className="rounded-full"
+                  className="rounded-full w-6 h-6"
                 />
                 <span className="font-semibold">{latestRelease.author.login}</span>
                 <p>released this {formatTimeAgo(latestRelease.published_at)}</p>
