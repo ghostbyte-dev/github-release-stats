@@ -44,7 +44,9 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
                 alt={'Avatar'}
                 className="rounded-full"
               />
-              <span className="text-xl md:text-2xl font-semibold">{repository.full_name}</span>
+              <span className="text-xl md:text-2xl font-semibold break-all">
+                {repository.full_name}
+              </span>
             </div>
             {remove && (
               <div>
