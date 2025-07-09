@@ -317,11 +317,11 @@ export default function RepositoryDetails() {
           ) : (
             <>error</>
           )}
-          <div>
+          <div className="w-full pt-4">
             {isFetchingNextPage && hasNextPage ? (
-              <p className="text-center">Loading more posts...</p>
+              <p className="text-center">Loading more...</p>
             ) : (
-              <p className="text-center">No more posts found</p>
+              <p className="text-center">No more releases found</p>
             )}
 
             <div ref={ref} />
