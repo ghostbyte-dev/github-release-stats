@@ -69,7 +69,7 @@ export default async function Home() {
       <title>Github Release Stats</title>
       <div className="flex justify-center">
         <div className="p-4 lg:p-8  w-full md:w-[90%]">
-          <div className="flex flex-row w-full justify-around items-center flex-wrap">
+          <div className="flex flex-col lg:flex-row w-full justify-around items-center">
             <Hero />
             <div className="flex justify-center min-w-full md:min-w-1/2">
               <SearchBar />
