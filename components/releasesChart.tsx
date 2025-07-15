@@ -23,7 +23,7 @@ const ReleasesChart = ({ releases }: ReleasesChartProps) => {
         ? assetDownloads.reduce((sum: number, current: number) => sum + current)
         : 0;
     return {
-      release: release.name !== '' ? release.name : release.tag_name,
+      release: release.name !== '' && release.name !== null ? release.name : release.tag_name,
       downloads: downloadSum,
     };
   });
