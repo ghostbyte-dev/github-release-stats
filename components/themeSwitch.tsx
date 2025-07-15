@@ -30,6 +30,7 @@ const ThemeSwitch = () => {
       type="button"
       className="relative w-10 h-[22px] rounded-full bg-switch-inactive border-border border-[1px] cursor-pointer hover:border-primary duration-200"
       onClick={toggleTheme}
+      aria-label="switch theme"
     >
       {theme === 'light' ? (
         <span className="absolute left-[1px] top-[1px] w-[18px] h-[18px] rounded-full bg-white flex justify-center items-center duration-200">
