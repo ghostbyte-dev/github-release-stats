@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset 
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
   <url>
-    <loc>https://github-release-stats.ghostbyte.dev</loc>
-    <lastmod>2025-06-27T13:05:37.942Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1</priority>
+    <loc>https://github-release-stats.ghostbyte.dev/</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>1.00</priority>
   </url>
-
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/signalapp/Signal-Android</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/microsoft/edit</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/bluesky-social/social-app</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/mastodon/mastodon-android</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/streetcomplete/StreetComplete</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/pixelfed/pixelfed-rn</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/ghostbyte-dev/pixelix</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/bitwarden/server</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/duckduckgo/Android</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://github-release-stats.ghostbyte.dev/JetBrains/kotlin</loc>
+    <lastmod>2025-07-15T11:26:07+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
 </urlset>

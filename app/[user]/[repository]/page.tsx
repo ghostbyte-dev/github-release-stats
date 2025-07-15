@@ -1,6 +1,5 @@
 'use client';
 
-import useReleases from '@/hooks/useReleases';
 import { useRepository } from '@/hooks/useRepository';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
@@ -24,6 +23,8 @@ import LoadingIndicator from '@/components/loadingIndicator';
 import useReleasesInfinite from '@/hooks/useReleasesInfinite';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
+import type { Metadata } from 'next/types';
+
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
 });
@@ -31,6 +32,7 @@ const MyChart = dynamic(() => import('../../../components/releasesChart'), {
 const MyStargazersChart = dynamic(() => import('../../../components/stargazersChart'), {
   ssr: false,
 });
+
 export default function RepositoryDetails() {
   const params = useParams();
   const user = params.user as string;

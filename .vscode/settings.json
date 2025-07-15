@@ -18,5 +18,8 @@
 	"i18n-ally.keystyle": "nested",
 	"[typescriptreact]": {
 		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[xml]": {
+		"editor.defaultFormatter": "redhat.vscode-xml"
 	}
 }

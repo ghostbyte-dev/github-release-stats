@@ -65,34 +65,31 @@ export default async function Home() {
   });
 
   return (
-    <>
-      <title>Github Release Stats</title>
-      <div className="flex justify-center">
-        <div className="p-4 lg:p-8  w-full md:w-[90%]">
-          <div className="flex flex-col lg:flex-row w-full justify-around items-center">
-            <Hero />
-            <div className="flex justify-center min-w-full md:min-w-1/2">
-              <SearchBar />
-            </div>
-          </div>
-          <LocalRepositories />
-          <div className="mt-10">
-            <h2 className="font-semibold text-2xl mb-6">Cool Repos</h2>
-            {coolRepos && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {coolRepos.map((repository: RepositorySave) => (
-                  <HydrationBoundary
-                    state={dehydrate(queryClient)}
-                    key={repository.name + repository.user}
-                  >
-                    <Card user={repository.user} repositoryName={repository.name} />
-                  </HydrationBoundary>
-                ))}
-              </div>
-            )}
+    <div className="flex justify-center">
+      <div className="p-4 lg:p-8  w-full md:w-[90%]">
+        <div className="flex flex-col lg:flex-row w-full justify-around items-center">
+          <Hero />
+          <div className="flex justify-center min-w-full md:min-w-1/2">
+            <SearchBar />
           </div>
         </div>
+        <LocalRepositories />
+        <div className="mt-10">
+          <h2 className="font-semibold text-2xl mb-6">Cool Repos</h2>
+          {coolRepos && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {coolRepos.map((repository: RepositorySave) => (
+                <HydrationBoundary
+                  state={dehydrate(queryClient)}
+                  key={repository.name + repository.user}
+                >
+                  <Card user={repository.user} repositoryName={repository.name} />
+                </HydrationBoundary>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }
