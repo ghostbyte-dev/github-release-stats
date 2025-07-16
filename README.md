@@ -1,9 +1,7 @@
 <h1 align="center">
-  <a href="https://preevy.dev" target="_blank" rel="noopener noreferrer">
     <picture>
       <img width="80" src="public/logo_rounded.svg" style="border-radius: 100px">
     </picture>
-  </a>
   <br />
   Github Release Stats
 </h1>
