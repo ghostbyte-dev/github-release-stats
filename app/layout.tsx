@@ -7,8 +7,7 @@ import { Toaster } from 'react-hot-toast';
 import Footer from '@/components/footer';
 import Providers from './providers';
 import type { Metadata } from 'next/types';
-import Head from 'next/head';
-import type { PerformingGroup, SoftwareApplication, WithContext } from 'schema-dts';
+import type { SoftwareApplication, WithContext } from 'schema-dts';
 
 const font = Lexend({
   subsets: ['latin'],
@@ -23,6 +22,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://github-release-stats.ghostbyte.dev/',
   },
+  metadataBase: new URL('https://github-release-stats.ghostbyte.dev'),
 };
 
 const jsonLd: WithContext<SoftwareApplication> = {
