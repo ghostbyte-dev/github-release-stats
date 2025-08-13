@@ -5,7 +5,7 @@
 ![Screenshot of github-release-stats.ghostbyte.dev website](https://github.com/user-attachments/assets/365d632d-9517-4fcb-befe-bb6966171790)
 
 
-Website: [ghostbyte.dev](https://ghostbyte.dev)
+Website: [github-release-stats.ghostbyte.dev](https://github-release-stats.ghostbyte.dev)
 
 <br>
 
