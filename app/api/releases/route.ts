@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         Authorization: `bearer ${token}`,
       },
       cache: 'force-cache',
-      next: { revalidate: 86400 },
+      next: { revalidate: 3600 },
     });
     const releases: Release[] = await res.json();
     return new Response(JSON.stringify(releases), {
