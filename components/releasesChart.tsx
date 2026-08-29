@@ -1,5 +1,3 @@
-import { formatLargeNumber } from '@/common/formatLargeNumber';
-import type { Asset, Release } from '@/types/release';
 import {
   Line,
   LineChart,
@@ -10,6 +8,8 @@ import {
   YAxis,
 } from 'recharts';
 import type { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
+import { formatLargeNumber } from '@/common/formatLargeNumber';
+import type { Asset, Release } from '@/types/release';
 
 type ReleasesChartProps = {
   releases: Release[];

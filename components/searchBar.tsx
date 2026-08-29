@@ -1,13 +1,12 @@
 'use client';
-import { useState } from 'react';
-import Input from './input';
-import type { Search } from '@/types/search';
-import { fetchRepository } from '@/hooks/useRepository';
-import type { repository } from '@/types/repository';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useLocalStorageContext } from '@/context/LocalStorageContext';
-import { CircleNotchIcon, SpinnerBallIcon } from '@phosphor-icons/react';
+import { fetchRepository } from '@/hooks/useRepository';
+import type { repository } from '@/types/repository';
+import type { Search } from '@/types/search';
+import Input from './input';
 import LoadingIndicator from './loadingIndicator';
 
 const SearchBar = () => {

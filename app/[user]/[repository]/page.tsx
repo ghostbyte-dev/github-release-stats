@@ -1,8 +1,5 @@
 'use client';
 
-import { useRepository } from '@/hooks/useRepository';
-import { useParams } from 'next/navigation';
-import Image from 'next/image';
 import {
   BookOpenIcon,
   EyeIcon,
@@ -13,17 +10,18 @@ import {
   StarIcon,
 } from '@phosphor-icons/react';
 import dynamic from 'next/dynamic';
-import type { Release } from '@/types/release';
-import ReleaseCard from '@/components/releaseCard';
-import { formatLargeNumber } from '@/common/formatLargeNumber';
-import { useEffect, useState } from 'react';
-import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
+import Image from 'next/image';
 import Link from 'next/link';
-import LoadingIndicator from '@/components/loadingIndicator';
-import useReleasesInfinite from '@/hooks/useReleasesInfinite';
-import React from 'react';
+import { useParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import type { Metadata } from 'next/types';
+import { formatLargeNumber } from '@/common/formatLargeNumber';
+import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
+import LoadingIndicator from '@/components/loadingIndicator';
+import ReleaseCard from '@/components/releaseCard';
+import useReleasesInfinite from '@/hooks/useReleasesInfinite';
+import { useRepository } from '@/hooks/useRepository';
+import type { Release } from '@/types/release';
 
 const MyChart = dynamic(() => import('../../../components/releasesChart'), {
   ssr: false,
@@ -135,17 +133,13 @@ export default function RepositoryDetails() {
               <div>
                 {!isDownloadChart ? (
                   <p>{repository?.stargazers_count} stars</p>
+                ) : releases && releases.pages[0].length > 0 ? (
+                  <p>
+                    {formatLargeNumber(getReleasesDownloadsCount(pagesToReleaseArray()))} downloads
+                    overall
+                  </p>
                 ) : (
-                  <>
-                    {releases && releases.pages[0].length > 0 ? (
-                      <p>
-                        {formatLargeNumber(getReleasesDownloadsCount(pagesToReleaseArray()))}{' '}
-                        downloads overall
-                      </p>
-                    ) : (
-                      <></>
-                    )}
-                  </>
+                  <></>
                 )}
               </div>
             </div>
@@ -153,15 +147,13 @@ export default function RepositoryDetails() {
 
             <div className="mt-2">
               {isDownloadChart ? (
-                <>
-                  {releases && releases.pages[0].length > 0 ? (
-                    <MyChart releases={pagesToReleaseArray()} />
-                  ) : isReleasesPending ? (
-                    <LoadingIndicator />
-                  ) : (
-                    <>No Releases exist for this repository</>
-                  )}
-                </>
+                releases && releases.pages[0].length > 0 ? (
+                  <MyChart releases={pagesToReleaseArray()} />
+                ) : isReleasesPending ? (
+                  <LoadingIndicator />
+                ) : (
+                  <>No Releases exist for this repository</>
+                )
               ) : (
                 <MyStargazersChart user={user} repository={repositoryName} />
               )}

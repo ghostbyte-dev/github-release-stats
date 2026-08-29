@@ -1,5 +1,5 @@
-import type { repository } from '@/types/repository';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import type { repository } from '@/types/repository';
 
 export function useRepository(
   user: string,

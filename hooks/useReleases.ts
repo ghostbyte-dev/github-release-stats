@@ -1,5 +1,5 @@
-import type { Release } from '@/types/release';
 import { useQuery } from '@tanstack/react-query';
+import type { Release } from '@/types/release';
 
 export default function useReleases(
   user: string,

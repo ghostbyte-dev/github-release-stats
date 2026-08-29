@@ -1,10 +1,10 @@
 'use client';
 
-import { convertBytes } from '@/common/bytesToSize';
-import type { Asset } from '@/types/release';
 import { PackageIcon } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { convertBytes } from '@/common/bytesToSize';
+import type { Asset } from '@/types/release';
 
 interface AssetsProps {
   assets: Asset[];

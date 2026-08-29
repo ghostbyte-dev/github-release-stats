@@ -1,11 +1,11 @@
-import type { Release } from '@/types/release';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import type { Release } from '@/types/release';
 import { fetchReleases } from './useReleases';
 
 export default function useReleasesInfinite(user: string, repository: string) {
   return useInfiniteQuery<Release[]>({
     queryKey: ['releasesInfinite', user, repository],
-    queryFn: ({pageParam}) => fetchReleases(user, repository, pageParam as number),
+    queryFn: ({ pageParam }) => fetchReleases(user, repository, pageParam as number),
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam: any) => {
       if (lastPage.length === 0) {

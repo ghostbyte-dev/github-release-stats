@@ -7,6 +7,10 @@ import { fetchRepository } from '@/hooks/useRepository';
 import type { RepositorySave } from '@/types/repositorySave';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
+// TODO: Cache Components adoption. Refactor this route so this opt-out can be removed.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 const coolRepos: RepositorySave[] = [
   {
     user: 'signalapp',

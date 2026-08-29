@@ -1,13 +1,17 @@
 import { Lexend } from 'next/font/google';
 import './globals.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import Navbar from '@/components/navbar';
+import type { Metadata } from 'next/types';
 import type React from 'react';
 import { Toaster } from 'react-hot-toast';
-import Footer from '@/components/footer';
-import Providers from './providers';
-import type { Metadata } from 'next/types';
 import type { SoftwareApplication, WithContext } from 'schema-dts';
+import Footer from '@/components/footer';
+import Navbar from '@/components/navbar';
+import Providers from './providers';
+
+// TODO: Cache Components adoption. Refactor this route so this opt-out can be removed.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
 
 const font = Lexend({
   subsets: ['latin'],
@@ -69,7 +73,7 @@ export default function RootLayout({
         />
         <Providers>
           <Navbar />
-          <div className="w-full pt-[81px]">{children}</div>
+          <div className="w-full pt-20.25">{children}</div>
           <Footer />
           <ReactQueryDevtools initialIsOpen={false} />
           <Toaster />

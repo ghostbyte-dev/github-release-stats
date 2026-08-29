@@ -1,16 +1,16 @@
 'use client';
+import { DownloadIcon, EyeIcon, GitForkIcon, StarIcon, TrashIcon } from '@phosphor-icons/react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { formatLargeNumber } from '@/common/formatLargeNumber';
 import { formatTimeAgo } from '@/common/formatTimeAgo';
+import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
 import useReleases from '@/hooks/useReleases';
 import { useRepository } from '@/hooks/useRepository';
 import type { Release } from '@/types/release';
-import { DownloadIcon, EyeIcon, GitForkIcon, StarIcon, TrashIcon } from '@phosphor-icons/react';
-import Image from 'next/image';
-import ReactionsComponent from './reactions';
-import { getReleasesDownloadsCount } from '@/common/getReleasesDownloadsCount';
-import Link from 'next/link';
 import Assets from './assets';
 import LoadingIndicator from './loadingIndicator';
+import ReactionsComponent from './reactions';
 
 interface CardProps {
   user: string;

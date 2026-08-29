@@ -1,12 +1,13 @@
-import { formatTimeAgo } from '@/common/formatTimeAgo';
-import type { Release } from '@/types/release';
 import { DownloadIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
-import ReactionsComponent from './reactions';
-import { getAssetsDownloadCountSum } from '@/common/getAssetsDownloadCountSum';
-import { formatLargeNumber } from '@/common/formatLargeNumber';
-import Assets from './assets';
 import Link from 'next/link';
+import { formatLargeNumber } from '@/common/formatLargeNumber';
+import { formatTimeAgo } from '@/common/formatTimeAgo';
+import { getAssetsDownloadCountSum } from '@/common/getAssetsDownloadCountSum';
+import type { Release } from '@/types/release';
+import Assets from './assets';
+import ReactionsComponent from './reactions';
+
 type ReleaseCardProps = {
   release: Release;
   latest: boolean;

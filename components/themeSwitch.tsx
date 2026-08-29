@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@phosphor-icons/react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false);

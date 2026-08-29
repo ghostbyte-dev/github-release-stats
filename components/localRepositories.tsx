@@ -1,8 +1,8 @@
 'use client';
 
+import { useLocalStorageContext } from '@/context/LocalStorageContext';
 import type { RepositorySave } from '@/types/repositorySave';
 import Card from './card';
-import { useLocalStorageContext } from '@/context/LocalStorageContext';
 
 const LocalRepositories = () => {
   const { repositories, setRepositories } = useLocalStorageContext();

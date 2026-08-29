@@ -1,5 +1,5 @@
 import type { repository } from '@/types/repository';
-import type { Edge, StargazersHistoryData } from '@/types/stargazersHistory';
+import type { StargazersHistoryData } from '@/types/stargazersHistory';
 
 const maxRequestAmount = 20;
 
