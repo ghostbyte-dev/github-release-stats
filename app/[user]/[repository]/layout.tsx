@@ -1,9 +1,18 @@
+import { cacheLife, cacheTag } from 'next/cache';
 import type { Metadata } from 'next/types';
 import type React from 'react';
 
-// TODO: Cache Components adoption. Refactor this route so this opt-out can be removed.
-// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
-export const instant = false;
+async function getRepoMetadata(user: string, repository: string) {
+  'use cache';
+  cacheLife('hours'); // Set lifetime (e.g. 'minutes', 'hours', 'days', or 'max')
+  cacheTag(`repo-${user}-${repository}`);
+
+  return {
+    title: `Github Release Stats - ${user}/${repository}`,
+    description: `Stats of the Github repository ${user}/${repository} and the download stats of the releases of it`,
+    canonical: `https://github-release-stats.ghostbyte.dev/${user}/${repository}`,
+  };
+}
 
 export async function generateMetadata({
   params,
@@ -11,14 +20,15 @@ export async function generateMetadata({
   params: Promise<{ user: string; repository: string }>;
 }): Promise<Metadata> {
   const { user, repository } = await params;
+  const meta = await getRepoMetadata(user, repository);
 
   return {
-    title: `Github Release Stats - ${user}/${repository}`,
-    description: `Stats of the Github repository ${user}/${repository} and the download stats of the releases of it`,
+    title: meta.title,
+    description: meta.description,
     creator: 'Ghostbyte.dev Team',
     generator: 'Next.js',
     alternates: {
-      canonical: `https://github-release-stats.ghostbyte.dev/${user}/${repository}`,
+      canonical: meta.canonical,
     },
   };
 }
