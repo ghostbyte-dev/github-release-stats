@@ -1,10 +1,11 @@
 import { cacheLife, cacheTag } from 'next/cache';
+import { connection } from 'next/server';
 import type { Metadata } from 'next/types';
 import type React from 'react';
 
 async function getRepoMetadata(user: string, repository: string) {
   'use cache';
-  cacheLife('hours'); // Set lifetime (e.g. 'minutes', 'hours', 'days', or 'max')
+  cacheLife('hours');
   cacheTag(`repo-${user}-${repository}`);
 
   return {
@@ -19,6 +20,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ user: string; repository: string }>;
 }): Promise<Metadata> {
+  // Mark the metadata resolution context as dynamic
+  await connection();
+
   const { user, repository } = await params;
   const meta = await getRepoMetadata(user, repository);
 

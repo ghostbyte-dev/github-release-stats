@@ -16,7 +16,7 @@ export async function GET(request: Request) {
     if (pageCount < maxRequestAmount) {
       requestPages.push(...range(1, pageCount));
     } else {
-      range(1, maxRequestAmount).map((i) => {
+      range(1, maxRequestAmount).forEach((i) => {
         requestPages.push(Math.round((i * pageCount) / maxRequestAmount) - 1);
       });
       if (!requestPages.includes(1)) {
@@ -31,10 +31,7 @@ export async function GET(request: Request) {
     );
 
     const chartData = await formatStargazers(resArray, requestPages, repository.stargazers_count);
-    return new Response(JSON.stringify(chartData), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return Response.json(chartData, { status: 200 });
   } catch (e) {
     console.log(e);
     throw Error('an unexpected error occured');
@@ -104,7 +101,7 @@ const formatStargazers = async (
       stars: allStarRecordsData.length,
     });
   } else {
-    starRecordsData.map((starPage: number[], index: number) => {
+    starRecordsData.forEach((starPage: number[], index: number) => {
       if (starPage[0] !== 0) {
         formattedData.push({
           date: starPage[0],
@@ -113,7 +110,7 @@ const formatStargazers = async (
       }
     });
     formattedData.push({
-      date: new Date(Date.now()).getTime(),
+      date: Date.now(),
       stars: repoStargazersCountCurrent,
     });
   }

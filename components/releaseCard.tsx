@@ -28,10 +28,10 @@ const ReleaseCard = ({ release, latest }: ReleaseCardProps) => {
           <span className="badge">Latest</span>
         ) : release.draft ? (
           <span className="badge border-warning text-warning">Draft</span>
-        ) : release.prerelease ? (
-          <span className="badge border-warning text-warning">Prerelease</span>
         ) : (
-          <></>
+          release.prerelease && (
+            <span className="badge border-warning text-warning">Prerelease</span>
+          )
         )}
       </div>
       <div className="flex flex-row gap-2 mt-4">
@@ -63,12 +63,10 @@ const ReleaseCard = ({ release, latest }: ReleaseCardProps) => {
 
       <Assets assets={release.assets} clickable />
 
-      {release.reactions ? (
+      {release.reactions && (
         <div className="mt-4">
           <ReactionsComponent reactions={release.reactions} />{' '}
         </div>
-      ) : (
-        <></>
       )}
     </div>
   );

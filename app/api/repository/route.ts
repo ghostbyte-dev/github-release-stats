@@ -1,28 +1,32 @@
 export async function GET(request: Request) {
   try {
-    const { user, repo } = Object.fromEntries(new URL(request.url).searchParams);
+    const { searchParams } = new URL(request.url);
+    const user = searchParams.get('user');
+    const repo = searchParams.get('repo');
 
-    const token = process.env.GITHUB_API_KEY ?? '';
-    const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-      cache: 'force-cache',
-      next: { revalidate: 86400 },
-    });
-    const repository = await res.json();
-    console.log(`rate limits remaining: ${res.headers.get('x-ratelimit-remaining')}`);
-    if (res.status !== 200) {
-      return new Response(JSON.stringify(repository), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+    if (!user || !repo) {
+      return Response.json({ message: 'Missing required parameters: user, repo' }, { status: 400 });
     }
-    return new Response(JSON.stringify(repository), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
+
+    const token = process.env.GITHUB_API_KEY;
+    const headers: Record<string, string> = {};
+
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
+      headers,
+      cache: 'no-store',
     });
-  } catch {
-    throw Error('an unexpected error occured');
+
+    console.log(`rate limits remaining: ${res.headers.get('x-ratelimit-remaining')}`);
+
+    const repository = await res.json();
+
+    return Response.json(repository, { status: res.status });
+  } catch (error) {
+    console.error('API Route Error:', error);
+    return Response.json({ message: 'An unexpected error occurred' }, { status: 500 });
   }
 }

@@ -72,6 +72,10 @@ export default function RepositoryDetails() {
     return [];
   };
 
+  const latestReleaseId = releases?.pages
+    .flat()
+    .find((release) => !release.draft && !release.prerelease)?.id;
+
   return (
     <div className="flex justify-center">
       <div className="flex flex-col p-4 lg:p-8 w-full md:w-[90%]">
@@ -114,18 +118,18 @@ export default function RepositoryDetails() {
         <div className="flex flex-wrap-reverse flex-row mt-10 gap-y-4">
           <div className="flex-2/3 card p-0">
             <div className="bg-bg-secondary py-2 px-2 rounded-md flex justify-between items-center">
-              <div className="border-border border-1 w-min flex rounded-md gap-1 bg-switch-inactive">
+              <div className="border-border border w-min flex rounded-md gap-1 bg-switch-inactive">
                 <button
                   type="button"
                   onClick={() => setIsDownloadChart(true)}
-                  className={`${isDownloadChart ? 'bg-switch-active border-switch-border-active border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+                  className={`${isDownloadChart ? 'bg-switch-active border-switch-border-active border font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 -m-px cursor-pointer`}
                 >
                   Downloads
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsDownloadChart(false)}
-                  className={`${!isDownloadChart ? 'bg-switch-active border-switch-border-active border-1 font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 m-[-1px] cursor-pointer`}
+                  className={`${!isDownloadChart ? 'bg-switch-active border-switch-border-active border font-semibold' : 'bg-transparent'} rounded-md py-1 px-2 -m-px cursor-pointer`}
                 >
                   Stars
                 </button>
@@ -133,17 +137,18 @@ export default function RepositoryDetails() {
               <div>
                 {!isDownloadChart ? (
                   <p>{repository?.stargazers_count} stars</p>
-                ) : releases && releases.pages[0].length > 0 ? (
-                  <p>
-                    {formatLargeNumber(getReleasesDownloadsCount(pagesToReleaseArray()))} downloads
-                    overall
-                  </p>
                 ) : (
-                  <></>
+                  releases &&
+                  releases.pages[0].length > 0 && (
+                    <p>
+                      {formatLargeNumber(getReleasesDownloadsCount(pagesToReleaseArray()))}{' '}
+                      downloads overall
+                    </p>
+                  )
                 )}
               </div>
             </div>
-            <hr className="h-[1px] border-t-0 rounded-full bg-border" />
+            <hr className="h-px border-t-0 rounded-full bg-border" />
 
             <div className="mt-2">
               {isDownloadChart ? (
@@ -284,25 +289,13 @@ export default function RepositoryDetails() {
               {releases.pages.map((page: Release[], i: number) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                 <React.Fragment key={i}>
-                  {page.map((release: Release) => {
-                    let latestAlreadyUsed = false;
-                    let latest = false;
-                    releases.pages.map((page: Release[]) => {
-                      page.map((releaseComparison: Release) => {
-                        if (
-                          releaseComparison.draft ||
-                          releaseComparison.prerelease ||
-                          latestAlreadyUsed
-                        )
-                          return;
-                        if (releaseComparison.id === release.id) {
-                          latest = true;
-                        }
-                        latestAlreadyUsed = true;
-                      });
-                    });
-                    return <ReleaseCard release={release} key={release.url} latest={latest} />;
-                  })}
+                  {page.map((release: Release) => (
+                    <ReleaseCard
+                      release={release}
+                      key={release.url}
+                      latest={release.id === latestReleaseId}
+                    />
+                  ))}
                 </React.Fragment>
               ))}
             </div>

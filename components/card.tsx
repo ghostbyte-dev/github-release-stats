@@ -87,7 +87,7 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
               </div>
             )}
           </div>
-          {latestRelease !== undefined ? (
+          {latestRelease !== undefined && (
             <>
               <hr className="my-4 h-0.5 border-t-0 rounded-full bg-neutral-100 dark:bg-white/10" />
 
@@ -114,16 +114,12 @@ const Card = ({ user, repositoryName, remove }: CardProps) => {
 
               <Assets assets={latestRelease.assets} />
 
-              {latestRelease.reactions ? (
+              {latestRelease.reactions && (
                 <div className="mt-4">
                   <ReactionsComponent reactions={latestRelease.reactions} />{' '}
                 </div>
-              ) : (
-                <></>
               )}
             </>
-          ) : (
-            <></>
           )}
         </>
       ) : isRepositoryPending ? (

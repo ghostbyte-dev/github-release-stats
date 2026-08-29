@@ -3,8 +3,7 @@ import {
   LineChart,
   ResponsiveContainer,
   Tooltip,
-  TooltipContentProps,
-  type TooltipProps,
+  type TooltipContentProps,
   XAxis,
   YAxis,
 } from 'recharts';

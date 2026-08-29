@@ -21,19 +21,17 @@ const ReactionsComponent = ({ reactions }: ReactionsProps) => {
     return listOfReactionNumber.reduce((prev: number, current: number) => prev + current);
   };
 
+  const activeReactions = reactionsList.filter((item) => item.count > 0);
+
   return (
     <div className="flex flex-row gap-2 items-center flex-wrap">
-      {reactionsList.map((reactionItem: { emoji: string; count: number }) => {
-        if (reactionItem.count > 0) {
-          return (
-            <div key={reactionItem.emoji}>
-              <span className="badge text-secondary-text border-border py-1 px-2 text-md">
-                {reactionItem.emoji} {reactionItem.count}
-              </span>
-            </div>
-          );
-        }
-      })}
+      {activeReactions.map((reactionItem) => (
+        <div key={reactionItem.emoji}>
+          <span className="badge text-secondary-text border-border py-1 px-2 text-md">
+            {reactionItem.emoji} {reactionItem.count}
+          </span>
+        </div>
+      ))}
       <p className="text-secondary-text text-sm">{getSumOfReactions()} people reacted</p>
     </div>
   );
