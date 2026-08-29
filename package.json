@@ -17,9 +17,9 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-hot-toast": "^2.6.0",
-    "react-intersection-observer": "^9.16.0",
-    "recharts": "^2.15.4",
-    "schema-dts": "^1.1.5"
+    "react-intersection-observer": "^11.0.1",
+    "recharts": "^3.10.1",
+    "schema-dts": "^2.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.11",
@@ -28,7 +28,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "tailwindcss": "^4.3.3",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "@types/react": "19.2.18",
