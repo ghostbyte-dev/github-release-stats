@@ -3,7 +3,7 @@ import {
   LineChart,
   ResponsiveContainer,
   Tooltip,
-  type TooltipProps,
+  type TooltipContentProps,
   XAxis,
   YAxis,
 } from 'recharts';
@@ -29,28 +29,30 @@ const StargazersChart = ({ user, repository }: StargazersChartProps) => {
           tickFormatter={(unixTime) => new Date(unixTime).toLocaleDateString()}
         />
         <YAxis stroke="#3D444D" dataKey={'stars'} />
-        <Tooltip content={(value) => renderTooltip(value)} />
+        <Tooltip content={renderTooltip} />
       </LineChart>
     </ResponsiveContainer>
   );
 };
 
-const renderTooltip = (props: TooltipProps<ValueType, NameType>) => {
-  if (props.active) {
+const renderTooltip = (props: TooltipContentProps<ValueType, NameType>) => {
+  if (props.active && props.label != null) {
+    const formattedDate = new Date(props.label).toLocaleDateString();
+
     return (
       <div className="card bg-bg-secondary">
-        <p className="text-lg font-semibold">{new Date(props.label).toLocaleDateString()}:</p>
+        <p className="text-lg font-semibold">{formattedDate}:</p>
 
         {props.payload?.[0] ? (
           <p className="text-lg font-semibold">
             {formatLargeNumber(props.payload[0].value as number)} stars
           </p>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </div>
     );
   }
+
+  return null;
 };
 
 export default StargazersChart;

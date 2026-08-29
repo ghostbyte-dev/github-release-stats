@@ -7,7 +7,7 @@ export function formatTimeAgo(date: Date | string): string {
     _date = date;
   }
 
-  const seconds: number = Math.floor((new Date().getTime() - _date.getTime()) / 1000);
+  const seconds: number = Math.floor((Date.now() - _date.getTime()) / 1000);
 
   const intervals: Record<string, number> = {
     year: 31536000,

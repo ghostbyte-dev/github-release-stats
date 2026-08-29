@@ -3,6 +3,7 @@ import {
   LineChart,
   ResponsiveContainer,
   Tooltip,
+  TooltipContentProps,
   type TooltipProps,
   XAxis,
   YAxis,
@@ -40,7 +41,7 @@ const ReleasesChart = ({ releases }: ReleasesChartProps) => {
   );
 };
 
-const renderTooltip = (props: TooltipProps<ValueType, NameType>) => {
+const renderTooltip = (props: TooltipContentProps<ValueType, NameType>) => {
   if (props.active) {
     return (
       <div className="card bg-bg-secondary">
